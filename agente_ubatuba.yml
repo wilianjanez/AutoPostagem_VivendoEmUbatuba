@@ -1,0 +1,66 @@
+# =============================================================================
+# GitHub Actions Workflow — "Vivendo em Ubatuba" Agent
+# =============================================================================
+# COMO USAR:
+#   1. Coloque este arquivo em: .github/workflows/agente_ubatuba.yml
+#   2. No seu repositório GitHub, vá em:
+#      Settings > Secrets and variables > Actions > New repository secret
+#   3. Adicione CADA variável do seu .env como um "Secret" separado
+#   4. O workflow rodará automaticamente todo dia às 08:00 (horário de Brasília)
+# =============================================================================
+
+name: 🤖 Agente Vivendo em Ubatuba
+
+on:
+  # Executa todo dia às 11:00 UTC = 08:00 BRT (Horário de Brasília)
+  schedule:
+    - cron: "0 11 * * *"
+
+  # Permite executar manualmente pela interface do GitHub (aba Actions > Run workflow)
+  workflow_dispatch:
+
+jobs:
+  publicar-post:
+    name: Buscar notícias e publicar no Instagram
+    runs-on: ubuntu-latest
+    timeout-minutes: 10  # Mata o job se demorar mais de 10 minutos
+
+    steps:
+      # 1. Clona o repositório
+      - name: 📥 Checkout do repositório
+        uses: actions/checkout@v4
+
+      # 2. Configura o Python
+      - name: 🐍 Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      # 3. Instala as dependências
+      - name: 📦 Instalar dependências
+        run: pip install requests python-dotenv
+
+      # 4. Cria o arquivo .env com os secrets do GitHub
+      - name: 🔐 Configurar variáveis de ambiente
+        run: |
+          echo "TAVILY_API_KEY=${{ secrets.TAVILY_API_KEY }}" >> .env
+          echo "ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}" >> .env
+          echo "IG_ACCESS_TOKEN=${{ secrets.IG_ACCESS_TOKEN }}" >> .env
+          echo "IG_USER_ID=${{ secrets.IG_USER_ID }}" >> .env
+          echo "DEFAULT_IMAGE_URL=${{ secrets.DEFAULT_IMAGE_URL }}" >> .env
+
+      # 5. Executa o agente
+      - name: 🚀 Executar agente de curadoria
+        run: python agente_ubatuba.py
+
+      # 6. Salva o log como artefato (opcional, útil para debug)
+      - name: 📋 Salvar log de execução
+        if: always()  # Salva mesmo se o step anterior falhar
+        uses: actions/upload-artifact@v4
+        with:
+          name: log-execucao-${{ github.run_id }}
+          path: |
+            agente_ubatuba.log
+            historico_posts.jsonl
+          retention-days: 30

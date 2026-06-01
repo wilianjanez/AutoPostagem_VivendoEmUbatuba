@@ -1,0 +1,952 @@
+2026-06-01 00:24:14,571 [INFO] ============================================================
+2026-06-01 00:24:14,571 [INFO] 🤖 AGENTE 'VIVENDO EM UBATUBA' INICIADO — 01/06/2026 00:24
+2026-06-01 00:24:14,571 [INFO] ============================================================
+2026-06-01 00:24:14,571 [INFO] 🔍 Iniciando busca de notícias sobre Ubatuba...
+2026-06-01 00:24:15,300 [WARNING] ⚠️  Erro na busca 'Ubatuba trânsito Rodovia Oswaldo Cruz Tamoios hoje': 401 Client Error: Unauthorized for url: https://api.tavily.com/search
+2026-06-01 00:24:16,039 [WARNING] ⚠️  Erro na busca 'Ubatuba previsão do tempo praias condições mar': 401 Client Error: Unauthorized for url: https://api.tavily.com/search
+2026-06-01 00:24:16,771 [WARNING] ⚠️  Erro na busca 'Ubatuba eventos shows cultura gastronomia turismo': 401 Client Error: Unauthorized for url: https://api.tavily.com/search
+2026-06-01 00:24:17,470 [WARNING] ⚠️  Erro na busca 'Ubatuba utilidade pública obras serviços prefeitura': 401 Client Error: Unauthorized for url: https://api.tavily.com/search
+2026-06-01 00:24:17,470 [ERROR] ❌ Nenhuma notícia encontrada. Verifique sua chave Tavily.
+2026-06-01 00:24:17,473 [WARNING] ⚠️  Sem notícias para processar. Pulando publicação.
+2026-06-01 00:24:17,473 [INFO] ⏭️  IA decidiu PULAR a publicação de hoje (sem conteúdo adequado). Encerrando.
+2026-06-01 00:58:02,713 [INFO] ============================================================
+2026-06-01 00:58:02,713 [INFO] 🤖 AGENTE 'VIVENDO EM UBATUBA' INICIADO — 01/06/2026 00:58
+2026-06-01 00:58:02,713 [INFO] ============================================================
+2026-06-01 00:58:02,713 [INFO] 🔍 Iniciando busca de notícias sobre Ubatuba...
+2026-06-01 00:58:14,645 [INFO] ✅ Busca concluída. 16 resultados coletados.
+2026-06-01 00:58:14,645 [INFO] 🧠 Enviando dados para o Claude gerar a legenda...
+2026-06-01 00:58:20,816 [INFO] ✅ Legenda gerada com sucesso (565 caracteres).
+2026-06-01 00:58:20,823 [INFO] 
+📝 LEGENDA GERADA:
+──────────────────────────────────────────────────
+🚗 Trânsito intenso na chegada a Ubatuba hoje!
+
+A Rodovia Oswaldo Cruz tá bem carregada, pessoal — quem vem do Vale, prepare a paciência e um bom podcast! O movimento tá forte principalmente no começo da serra. Se puder, evite os horários de pico entre 10h e 14h.
+
+💡 Dica local: pra quem já tá na cidade e quer escapar do fluxo, aproveita as praias do sul (Félix, Prumirim) que costumam ficar mais tranquilas em dias assim.
+
+E aí, como foi a viagem de vocês hoje? Quanto tempo pegaram na estrada? 👇
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba
+──────────────────────────────────────────────────
+2026-06-01 00:58:20,823 [INFO] 📦 Criando container de mídia no Instagram...
+2026-06-01 00:58:32,482 [ERROR] ❌ Erro HTTP ao criar container: 400 — {"error":{"message":"The aspect ratio is not supported.","type":"OAuthException","code":36003,"error_subcode":2207009,"is_transient":false,"error_user_title":"Taxa de propor\u00e7\u00e3o inv\u00e1lida","error_user_msg":"N\u00e3o \u00e9 poss\u00edvel publicar a imagem enviada com taxa de propor\u00e7\u00e3o (). Envie uma imagem com uma taxa de propor\u00e7\u00e3o v\u00e1lida.","fbtrace_id":"AY--PcectU54sOYWx7WXX8a"}}
+2026-06-01 00:58:32,482 [ERROR] ❌ Falha na publicação. O post NÃO foi publicado. Erro: 400 Client Error: Bad Request for url: https://graph.instagram.com/v21.0/17841449196964670/media
+2026-06-01 00:58:32,482 [INFO] 💡 Verifique: (1) Token expirado? (2) Conta Business ativa? (3) URL da imagem pública?
+2026-06-01 01:01:57,150 [INFO] ============================================================
+2026-06-01 01:01:57,150 [INFO] 🤖 AGENTE 'VIVENDO EM UBATUBA' INICIADO — 01/06/2026 01:01
+2026-06-01 01:01:57,150 [INFO] ============================================================
+2026-06-01 01:01:57,150 [INFO] 🔍 Iniciando busca de notícias sobre Ubatuba...
+2026-06-01 01:02:03,884 [INFO] ✅ Busca concluída. 16 resultados coletados.
+2026-06-01 01:02:03,887 [INFO] 🧠 Enviando dados para o Claude gerar a legenda...
+2026-06-01 01:02:10,854 [INFO] ✅ Legenda gerada com sucesso (583 caracteres).
+2026-06-01 01:02:10,854 [INFO] 
+📝 LEGENDA GERADA:
+──────────────────────────────────────────────────
+🚗 Trânsito complicado pra entrar em Ubatuba!
+
+Quem tá vindo pela Oswaldo Cruz já sabe: a chegada tá lenta, com congestionamento na descida da serra. Domingo clássico de temporada! O tempo tá fechadinho, com chuva fraca e 22°C — então sem pressa, que o visual da serra com neblina tá lindo.
+
+💡 Dica local: se puder, evite descer entre 10h e 14h. Fim de tarde o fluxo alivia bastante e você ainda pega o clima gostoso da noite na cidade.
+
+E aí, quem tá preso na fila agora? Conta aqui quanto tempo levou pra descer! 👇
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba
+──────────────────────────────────────────────────
+2026-06-01 01:02:10,854 [INFO] 📦 Criando container de mídia no Instagram...
+2026-06-01 01:02:19,951 [INFO] ✅ Container criado. ID: 18078325583639899
+2026-06-01 01:02:19,951 [INFO] 🚀 Publicando container 18078325583639899 no Instagram...
+2026-06-01 01:02:28,287 [INFO] 🎉 POST PUBLICADO COM SUCESSO! ID do post: 17975774538044521
+2026-06-01 01:02:28,289 [INFO] ✅ Pipeline concluído com sucesso!
+2026-06-01 01:02:28,289 [INFO] 📸 Post ID: 17975774538044521
+2026-06-01 01:15:21,399 [INFO] ============================================================
+2026-06-01 01:15:21,399 [INFO] 🤖 AGENTE 'VIVENDO EM UBATUBA' v2.0 — 01/06/2026 01:15
+2026-06-01 01:15:21,399 [INFO] ============================================================
+2026-06-01 01:15:21,399 [INFO] 🔍 Buscando notícias sobre Ubatuba...
+2026-06-01 01:15:28,129 [INFO] ✅ 16 resultados coletados.
+2026-06-01 01:15:28,129 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 01:15:33,996 [INFO] ✅ Conteúdo gerado com sucesso.
+2026-06-01 01:15:33,996 [INFO] 
+📝 CONTEÚDO GERADO:
+──────────────────────────────────────────────────
+🚗 Trânsito travado na Oswaldo Cruz hoje!
+
+Quem tá chegando ou saindo de Ubatuba pela SP-125 já sabe: a Rodovia Oswaldo Cruz tá bem congestionada, especialmente no trecho inicial. Velocidade média de 30 km/h em alguns pontos. Dica de morador: se puder, deixa pra sair mais tarde ou aproveita pra conhecer uma praia mais pertinho enquanto o fluxo acalma.
+
+E aí, qual seu atalho secreto pra fugir do trânsito por aqui?
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba
+──────────────────────────────────────────────────
+2026-06-01 01:15:33,996 [INFO] 🎨 Gerando imagens com Pillow...
+2026-06-01 01:15:35,565 [WARNING] ⚠️  Fontes Poppins/DejaVu não encontradas. Usando fonte padrão.
+2026-06-01 01:15:36,049 [WARNING] ⚠️  Fontes Poppins/DejaVu não encontradas. Usando fonte padrão.
+2026-06-01 01:15:36,075 [INFO] ✅ Imagens geradas com sucesso.
+2026-06-01 01:15:36,075 [INFO] ☁️  Fazendo upload da imagem 'ubatuba_feed_20260601_0115' para ImgBB...
+2026-06-01 01:15:38,363 [INFO] ✅ Upload concluído: https://i.ibb.co/xK8C11Y6/ubatuba-feed-20260601-0115.jpg
+2026-06-01 01:15:38,363 [INFO] ☁️  Fazendo upload da imagem 'ubatuba_story_20260601_0115' para ImgBB...
+2026-06-01 01:15:40,928 [INFO] ✅ Upload concluído: https://i.ibb.co/v6K7Y7Z7/ubatuba-story-20260601-0115.jpg
+2026-06-01 01:15:40,934 [INFO] 📦 Criando container de mídia (FEED)...
+2026-06-01 01:15:44,968 [INFO] ✅ Container FEED criado. ID: 18078326756639899
+2026-06-01 01:15:44,968 [INFO] 🚀 Publicando FEED (container 18078326756639899)...
+2026-06-01 01:15:53,212 [INFO] 🎉 FEED PUBLICADO! ID: 18081989102428679
+2026-06-01 01:16:01,220 [INFO] 📦 Criando container de mídia (STORY)...
+2026-06-01 01:16:05,228 [INFO] ✅ Container STORY criado. ID: 18078326786639899
+2026-06-01 01:16:05,229 [INFO] 🚀 Publicando STORY (container 18078326786639899)...
+2026-06-01 01:16:13,079 [INFO] 🎉 STORY PUBLICADO! ID: 17891805327487721
+2026-06-01 01:16:13,079 [INFO] 🎉 Pipeline concluído! Feed ✅ e Stories ✅ publicados com sucesso!
+2026-06-01 01:21:30,652 [INFO] ============================================================
+2026-06-01 01:21:30,652 [INFO] 🤖 AGENTE 'VIVENDO EM UBATUBA' v2.0 — 01/06/2026 01:21
+2026-06-01 01:21:30,652 [INFO] ============================================================
+2026-06-01 01:21:30,652 [INFO] 🔍 Buscando notícias sobre Ubatuba...
+2026-06-01 01:21:37,382 [INFO] ✅ 16 resultados coletados.
+2026-06-01 01:21:37,382 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 01:21:44,330 [INFO] ✅ Conteúdo gerado com sucesso.
+2026-06-01 01:21:44,346 [INFO] 
+📝 CONTEÚDO GERADO:
+──────────────────────────────────────────────────
+🚗 Oswaldo Cruz travada!
+
+Quem tá tentando entrar ou sair de Ubatuba pela Oswaldo Cruz hoje, prepara o fôlego. O trânsito tá pesado desde cedo, especialmente no começo da rodovia. Se der, evita o horário de pico ou já deixa uma playlist boa no carro. Quem puder usar a Rio-Santos como alternativa, vale considerar — mas fica de olho porque Tamoios também tá movimentada.
+
+E aí, quanto tempo você levou pra passar hoje?
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba #transito #oswaldocruz
+──────────────────────────────────────────────────
+2026-06-01 01:21:44,346 [INFO] 🎨 Gerando cards com Pillow...
+2026-06-01 01:21:45,774 [WARNING] ⚠️  Fontes não encontradas. Usando padrão.
+2026-06-01 01:21:46,278 [WARNING] ⚠️  Fontes não encontradas. Usando padrão.
+2026-06-01 01:21:46,282 [INFO] ✅ Imagens geradas com sucesso.
+2026-06-01 01:21:46,282 [INFO] ☁️  Fazendo upload da imagem 'ubatuba_feed_20260601_0121' para ImgBB...
+2026-06-01 01:21:48,863 [INFO] ✅ Upload concluído: https://i.ibb.co/P8NgDdS/ubatuba-feed-20260601-0121.jpg
+2026-06-01 01:21:48,875 [INFO] ☁️  Fazendo upload da imagem 'ubatuba_story_20260601_0121' para ImgBB...
+2026-06-01 01:21:51,438 [INFO] ✅ Upload concluído: https://i.ibb.co/cKCJT0xC/ubatuba-story-20260601-0121.jpg
+2026-06-01 01:21:51,456 [INFO] 📦 Criando container de mídia (FEED)...
+2026-06-01 01:21:55,940 [INFO] ✅ Container FEED criado. ID: 18078327293639899
+2026-06-01 01:21:55,956 [INFO] 🚀 Publicando FEED (container 18078327293639899)...
+2026-06-01 01:22:04,255 [INFO] 🎉 FEED PUBLICADO! ID: 17972906415026695
+2026-06-01 01:22:12,269 [INFO] 📦 Criando container de mídia (STORY)...
+2026-06-01 01:22:16,377 [INFO] ✅ Container STORY criado. ID: 18078327311639899
+2026-06-01 01:22:16,377 [INFO] 🚀 Publicando STORY (container 18078327311639899)...
+2026-06-01 01:22:23,957 [INFO] 🎉 STORY PUBLICADO! ID: 17889186585540420
+2026-06-01 01:22:23,965 [INFO] 🎉 Pipeline concluído! Feed ✅ e Stories ✅ publicados com sucesso!
+2026-06-01 01:30:40,825 [INFO] ============================================================
+2026-06-01 01:30:40,825 [INFO] 🤖 AGENTE 'VIVENDO EM UBATUBA' v2.0 — 01/06/2026 01:30
+2026-06-01 01:30:40,825 [INFO] ============================================================
+2026-06-01 01:30:40,826 [INFO] 🔍 Buscando notícias de Ubatuba para 01/06/2026...
+2026-06-01 01:30:44,429 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 01:30:50,040 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 01:30:56,243 [INFO]   ✅ 🎭 EVENTOS & CULTURA: 5 resultado(s)
+2026-06-01 01:31:02,301 [INFO]   ✅ 🏛️ UTILIDADE PÚBLICA: 5 resultado(s)
+2026-06-01 01:31:03,805 [INFO] ✅ Busca concluída: 4 categorias, ~132 linhas de contexto.
+2026-06-01 01:31:03,806 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 01:31:10,243 [INFO] ✅ Conteúdo gerado — Categoria: EVENTOS | Confiança: ALTA
+2026-06-01 01:31:10,245 [INFO] 
+📝 CONTEÚDO GERADO:
+──────────────────────────────────────────────────
+🎣 Festa de São Pedro vem aí!
+
+Anota na agenda! A tradicional Festa de São Pedro Pescador já tem data marcada em Ubatuba. São cinco dias de programação com cultura caiçara, shows, comida boa e aquele clima único do litoral. É a maior festa junina da cidade e homenageia os pescadores que fazem parte da alma de Ubatuba. Bora prestigiar?
+
+Você já foi em alguma edição? Conta aí o que mais curte na festa!
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba #festasaopedro #festajunina
+──────────────────────────────────────────────────
+2026-06-01 01:31:10,245 [INFO] 🎨 Gerando cards com Pillow...
+2026-06-01 01:31:11,738 [WARNING] ⚠️  Fontes não encontradas. Usando padrão.
+2026-06-01 01:31:12,200 [WARNING] ⚠️  Fontes não encontradas. Usando padrão.
+2026-06-01 01:31:12,216 [INFO] ✅ Imagens geradas com sucesso.
+2026-06-01 01:31:12,216 [INFO] ☁️  Fazendo upload da imagem 'ubatuba_feed_20260601_0131' para ImgBB...
+2026-06-01 01:31:14,765 [INFO] ✅ Upload concluído: https://i.ibb.co/nNPXSDhR/ubatuba-feed-20260601-0131.jpg
+2026-06-01 01:31:14,777 [INFO] ☁️  Fazendo upload da imagem 'ubatuba_story_20260601_0131' para ImgBB...
+2026-06-01 01:31:17,342 [INFO] ✅ Upload concluído: https://i.ibb.co/9mn04tYX/ubatuba-story-20260601-0131.jpg
+2026-06-01 01:31:17,342 [INFO] 📦 Criando container de mídia (FEED)...
+2026-06-01 01:31:22,137 [INFO] ✅ Container FEED criado. ID: 18078329081639899
+2026-06-01 01:31:22,137 [INFO] 🚀 Publicando FEED (container 18078329081639899)...
+2026-06-01 01:31:30,397 [INFO] 🎉 FEED PUBLICADO! ID: 18116231275694366
+2026-06-01 01:31:38,413 [INFO] 📦 Criando container de mídia (STORY)...
+2026-06-01 01:31:41,864 [INFO] ✅ Container STORY criado. ID: 18078329111639899
+2026-06-01 01:31:41,864 [INFO] 🚀 Publicando STORY (container 18078329111639899)...
+2026-06-01 01:31:49,660 [INFO] 🎉 STORY PUBLICADO! ID: 18076136123276970
+2026-06-01 01:31:49,663 [INFO] 🎉 Pipeline concluído! Feed ✅ e Stories ✅ publicados com sucesso!
+2026-06-01 01:37:04,221 [INFO] ============================================================
+2026-06-01 01:37:04,221 [INFO] 🤖 AGENTE 'VIVENDO EM UBATUBA' v3.0 — 01/06/2026 01:37
+2026-06-01 01:37:04,221 [INFO] ============================================================
+2026-06-01 01:37:04,221 [INFO] 🔍 Buscando notícias de Ubatuba — 01/06/2026...
+2026-06-01 01:37:04,941 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 01:37:09,452 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 01:37:13,274 [INFO]   ✅ 🎭 EVENTOS & CULTURA: 5 resultado(s)
+2026-06-01 01:37:15,430 [INFO]   ✅ 🏛️ UTILIDADE PÚBLICA: 5 resultado(s)
+2026-06-01 01:37:16,941 [INFO] ✅ 4 categorias coletadas.
+2026-06-01 01:37:16,941 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 01:37:23,795 [INFO] ✅ Gerado — Categoria: TEMPO | Confiança: ALTA
+2026-06-01 01:37:23,795 [INFO] 
+📝 LEGENDA:
+──────────────────────────────────────────────────
+☁️ Segunda chuvosa em Ubatuba
+
+Hoje a cidade amanhece com céu nublado e boa chance de chuva a qualquer momento. Temperatura agradável, entre 15°C e 19°C, perfeita pra um café com vista pro mar ou explorar os restaurantes locais. Lua cheia hoje à noite pra quem quiser apreciar — se o tempo abrir, fica lindo da praia! Guarda-chuva na bolsa e bora aproveitar.
+
+Dia de chuva em Ubatuba: praia mesmo assim ou programa alternativo?
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba
+──────────────────────────────────────────────────
+2026-06-01 01:37:23,795 [INFO] 🎨 Gerando cards...
+2026-06-01 01:37:23,795 [WARNING] ⚠️  NotoColorEmoji não encontrada.
+2026-06-01 01:37:23,795 [WARNING] ⚠️  Poppins/DejaVu não encontradas. Usando fonte padrão.
+2026-06-01 01:37:25,272 [WARNING] ⚠️  NotoColorEmoji não encontrada.
+2026-06-01 01:37:25,272 [WARNING] ⚠️  Poppins/DejaVu não encontradas. Usando fonte padrão.
+2026-06-01 01:37:26,745 [INFO] ✅ Cards gerados.
+2026-06-01 01:37:26,755 [INFO] ☁️  Upload 'ubatuba_feed_20260601_0137' → ImgBB...
+2026-06-01 01:37:29,185 [INFO] ✅ Upload OK: https://i.ibb.co/B5M55P3j/ubatuba-feed-20260601-0137.jpg
+2026-06-01 01:37:29,198 [INFO] ☁️  Upload 'ubatuba_story_20260601_0137' → ImgBB...
+2026-06-01 01:37:31,832 [INFO] ✅ Upload OK: https://i.ibb.co/ZRyPmjnX/ubatuba-story-20260601-0137.jpg
+2026-06-01 01:37:31,844 [INFO] 📦 Criando container FEED...
+2026-06-01 01:37:35,385 [INFO] ✅ Container FEED criado: 18078329843639899
+2026-06-01 01:37:35,385 [INFO] 🚀 Publicando FEED...
+2026-06-01 01:37:43,021 [INFO] 🎉 FEED publicado! ID: 18089029895618734
+2026-06-01 01:37:51,035 [INFO] 📦 Criando container STORY...
+2026-06-01 01:37:54,768 [INFO] ✅ Container STORY criado: 18078329864639899
+2026-06-01 01:37:54,772 [INFO] 🚀 Publicando STORY...
+2026-06-01 01:38:02,186 [INFO] 🎉 STORY publicado! ID: 18135090247496077
+2026-06-01 01:38:02,186 [INFO] 🎉 Feed ✅ e Stories ✅ publicados!
+2026-06-01 01:44:32,793 [INFO] ============================================================
+2026-06-01 01:44:32,793 [INFO] 🤖 AGENTE 'VIVENDO EM UBATUBA' v3.0 — 01/06/2026 01:44
+2026-06-01 01:44:32,793 [INFO] ============================================================
+2026-06-01 01:44:32,793 [INFO] 🔍 Buscando notícias de Ubatuba — 01/06/2026...
+2026-06-01 01:44:33,494 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 01:44:35,665 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 01:44:37,923 [INFO]   ✅ 🎭 EVENTOS & CULTURA: 5 resultado(s)
+2026-06-01 01:44:40,142 [INFO]   ✅ 🏛️ UTILIDADE PÚBLICA: 5 resultado(s)
+2026-06-01 01:44:41,644 [INFO] ✅ 4 categorias coletadas.
+2026-06-01 01:44:41,644 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 01:44:48,482 [INFO] ✅ Gerado — Categoria: EVENTOS | Confiança: ALTA
+2026-06-01 01:44:48,491 [INFO] 
+📝 LEGENDA:
+──────────────────────────────────────────────────
+🎣 Festa de São Pedro vem aí!
+
+Ubatuba se prepara pra uma das festas mais esperadas do ano! A 103ª Festa de São Pedro Pescador acontece agora em junho e promete emocionar com a tradicional procissão marítima. É aquele momento de honrar nossas raízes caiçaras, com muita fé, peixe fresco e encontro da comunidade. Se você nunca viu os barcos enfeitados saindo pro mar, esse é o ano!
+
+Você já participou da procissão marítima alguma vez?
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba #saopedropescador #festacaiçara
+──────────────────────────────────────────────────
+2026-06-01 01:44:48,491 [INFO] 🎨 Gerando cards...
+2026-06-01 01:44:48,491 [WARNING] ⚠️  Poppins/DejaVu não encontradas. Usando fonte padrão.
+2026-06-01 01:44:50,057 [WARNING] ⚠️  Poppins/DejaVu não encontradas. Usando fonte padrão.
+2026-06-01 01:44:51,594 [INFO] ✅ Cards gerados.
+2026-06-01 01:44:51,606 [INFO] ☁️  Upload 'ubatuba_feed_20260601_0144' → ImgBB...
+2026-06-01 01:44:54,092 [INFO] ✅ Upload OK: https://i.ibb.co/zT2Kp5yZ/ubatuba-feed-20260601-0144.jpg
+2026-06-01 01:44:54,094 [INFO] ☁️  Upload 'ubatuba_story_20260601_0144' → ImgBB...
+2026-06-01 01:44:56,603 [INFO] ✅ Upload OK: https://i.ibb.co/Q7Qj452N/ubatuba-story-20260601-0144.jpg
+2026-06-01 01:44:56,619 [INFO] 📦 Criando container FEED...
+2026-06-01 01:44:59,998 [INFO] ✅ Container FEED criado: 18078330572639899
+2026-06-01 01:44:59,998 [INFO] 🚀 Publicando FEED...
+2026-06-01 01:45:07,900 [INFO] 🎉 FEED publicado! ID: 18004449404924222
+2026-06-01 01:45:15,909 [INFO] 📦 Criando container STORY...
+2026-06-01 01:45:18,699 [INFO] ✅ Container STORY criado: 18078330590639899
+2026-06-01 01:45:18,705 [INFO] 🚀 Publicando STORY...
+2026-06-01 01:45:25,998 [INFO] 🎉 STORY publicado! ID: 17864422482688262
+2026-06-01 01:45:25,998 [INFO] 🎉 Feed ✅ e Stories ✅ publicados!
+2026-06-01 01:51:43,264 [INFO] ============================================================
+2026-06-01 01:51:43,265 [INFO] 🤖 VIVENDO EM UBATUBA v3.1 — 01/06/2026 01:51
+2026-06-01 01:51:43,265 [INFO] ============================================================
+2026-06-01 01:51:43,265 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 01:51:46,772 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 01:51:49,014 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 01:51:51,254 [INFO]   ✅ 🎭 EVENTOS: 5 resultado(s)
+2026-06-01 01:51:53,451 [INFO]   ✅ 🏛️ UTILIDADE: 5 resultado(s)
+2026-06-01 01:51:54,959 [INFO] ✅ 4 categorias coletadas.
+2026-06-01 01:51:54,959 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 01:52:01,050 [INFO] ✅ Gerado — Categoria: TEMPO | Confiança: ALTA
+2026-06-01 01:52:01,050 [INFO] 
+📝 LEGENDA:
+──────────────────────────────────────────────────
+☁️ Segunda friozinha em Ubatuba!
+
+Segunda-feira começando fresquinha por aqui! A temperatura fica entre 15°C e 19°C, com céu bem nublado e possibilidade de garoa ao longo do dia. Lua cheia iluminando a noite pra quem curtir uma caminhada na orla. Dia perfeito pra um café quentinho com vista pro mar ou explorar as trilhas mais leves da região.
+
+Como você curte os dias mais frescos em Ubatuba?
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba
+──────────────────────────────────────────────────
+2026-06-01 01:52:01,050 [INFO] 🎨 Gerando cards...
+2026-06-01 01:52:01,050 [ERROR] ❌ Poppins-Bold ou DejaVuSans não encontradas em: C:\Pessoal\Sites\AutoPostagem/fonts/
+2026-06-01 01:52:02,585 [ERROR] ❌ Poppins-Bold ou DejaVuSans não encontradas em: C:\Pessoal\Sites\AutoPostagem/fonts/
+2026-06-01 01:52:04,104 [INFO] ✅ Cards gerados.
+2026-06-01 01:52:04,104 [INFO] ☁️  Upload 'ubatuba_feed_20260601_0152' → ImgBB...
+2026-06-01 01:52:06,368 [INFO] ✅ Upload OK: https://i.ibb.co/yFRGFS1j/ubatuba-feed-20260601-0152.jpg
+2026-06-01 01:52:06,368 [INFO] ☁️  Upload 'ubatuba_story_20260601_0152' → ImgBB...
+2026-06-01 01:52:08,620 [INFO] ✅ Upload OK: https://i.ibb.co/HTRxchN8/ubatuba-story-20260601-0152.jpg
+2026-06-01 01:52:08,621 [INFO] 📦 Criando container FEED...
+2026-06-01 01:52:12,866 [INFO] ✅ Container FEED: 18078331082639899
+2026-06-01 01:52:12,876 [INFO] 🚀 Publicando FEED...
+2026-06-01 01:52:21,555 [INFO] 🎉 FEED publicado! ID: 18130543615597473
+2026-06-01 01:52:29,568 [INFO] 📦 Criando container STORY...
+2026-06-01 01:52:32,921 [INFO] ✅ Container STORY: 18078331124639899
+2026-06-01 01:52:32,921 [INFO] 🚀 Publicando STORY...
+2026-06-01 01:52:40,559 [INFO] 🎉 STORY publicado! ID: 18069133049695601
+2026-06-01 01:52:40,568 [INFO] 🎉 Feed ✅ e Stories ✅ publicados!
+2026-06-01 01:54:33,532 [INFO] ============================================================
+2026-06-01 01:54:33,532 [INFO] 🤖 VIVENDO EM UBATUBA v3.1 — 01/06/2026 01:54
+2026-06-01 01:54:33,532 [INFO] ============================================================
+2026-06-01 01:54:33,532 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 01:54:34,277 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 01:54:36,456 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 01:54:38,632 [INFO]   ✅ 🎭 EVENTOS: 5 resultado(s)
+2026-06-01 01:54:40,804 [INFO]   ✅ 🏛️ UTILIDADE: 5 resultado(s)
+2026-06-01 01:54:42,319 [INFO] ✅ 4 categorias coletadas.
+2026-06-01 01:54:42,319 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 01:54:49,658 [INFO] ✅ Gerado — Categoria: TEMPO | Confiança: ALTA
+2026-06-01 01:54:49,659 [INFO] 
+📝 LEGENDA:
+──────────────────────────────────────────────────
+Segunda fresca! 🌧️☁️
+
+A semana começa com aquele climinha mais friozinho aqui na nossa Ubatuba. A previsão aponta máxima de 19°C e mínima de 15°C, com possibilidade de chuvas esparsas ao longo do dia. Umidade em torno de 75%. Dia perfeito pra um café quentinho, aquela canja no almoço ou maratonar série em casa. Se for sair, leva um casaquinho e guarda-chuva na bolsa que não tem erro!
+
+E aí, o que vocês fazem em Ubatuba quando o tempo fecha assim?
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba
+──────────────────────────────────────────────────
+2026-06-01 01:54:49,666 [INFO] 🎨 Gerando cards...
+2026-06-01 01:54:49,668 [ERROR] ❌ NotoColorEmoji não encontrada em: C:\Pessoal\Sites\AutoPostagem\fonts\NotoColorEmoji.ttf
+2026-06-01 01:54:49,668 [ERROR]    Certifique-se de que a pasta fonts/ está na mesma pasta do script.
+2026-06-01 01:54:49,669 [ERROR] ❌ Poppins-Bold ou DejaVuSans não encontradas em: C:\Pessoal\Sites\AutoPostagem/fonts/
+2026-06-01 01:54:51,127 [ERROR] ❌ NotoColorEmoji não encontrada em: C:\Pessoal\Sites\AutoPostagem\fonts\NotoColorEmoji.ttf
+2026-06-01 01:54:51,128 [ERROR]    Certifique-se de que a pasta fonts/ está na mesma pasta do script.
+2026-06-01 01:54:51,128 [ERROR] ❌ Poppins-Bold ou DejaVuSans não encontradas em: C:\Pessoal\Sites\AutoPostagem/fonts/
+2026-06-01 01:54:51,593 [INFO] ✅ Cards gerados.
+2026-06-01 01:54:51,593 [INFO] ☁️  Upload 'ubatuba_feed_20260601_0154' → ImgBB...
+2026-06-01 01:54:53,762 [INFO] ✅ Upload OK: https://i.ibb.co/vvhnMX3v/ubatuba-feed-20260601-0154.jpg
+2026-06-01 01:54:53,762 [INFO] ☁️  Upload 'ubatuba_story_20260601_0154' → ImgBB...
+2026-06-01 01:54:56,070 [INFO] ✅ Upload OK: https://i.ibb.co/kswdJkcK/ubatuba-story-20260601-0154.jpg
+2026-06-01 01:54:56,074 [INFO] 📦 Criando container FEED...
+2026-06-01 01:54:59,859 [INFO] ✅ Container FEED: 18078331277639899
+2026-06-01 01:54:59,879 [INFO] 🚀 Publicando FEED...
+2026-06-01 01:55:08,196 [INFO] 🎉 FEED publicado! ID: 18128723962553321
+2026-06-01 01:55:16,208 [INFO] 📦 Criando container STORY...
+2026-06-01 01:55:19,098 [INFO] ✅ Container STORY: 18078331301639899
+2026-06-01 01:55:19,098 [INFO] 🚀 Publicando STORY...
+2026-06-01 01:55:26,298 [INFO] 🎉 STORY publicado! ID: 17966257412919209
+2026-06-01 01:55:26,303 [INFO] 🎉 Feed ✅ e Stories ✅ publicados!
+2026-06-01 01:57:47,434 [INFO] ============================================================
+2026-06-01 01:57:47,434 [INFO] 🤖 VIVENDO EM UBATUBA v3.1 — 01/06/2026 01:57
+2026-06-01 01:57:47,434 [INFO] ============================================================
+2026-06-01 01:57:47,434 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 01:57:48,125 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 01:57:50,309 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 01:57:52,623 [INFO]   ✅ 🎭 EVENTOS: 5 resultado(s)
+2026-06-01 01:57:54,925 [INFO]   ✅ 🏛️ UTILIDADE: 5 resultado(s)
+2026-06-01 01:57:56,426 [INFO] ✅ 4 categorias coletadas.
+2026-06-01 01:57:56,428 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 01:58:02,746 [INFO] ✅ Gerado — Categoria: TEMPO | Confiança: ALTA
+2026-06-01 01:58:02,750 [INFO] 
+📝 LEGENDA:
+──────────────────────────────────────────────────
+☁️ Segunda friinha em Ubatuba!
+
+Começou junho e o friozinho chegou junto! Hoje a temperatura fica entre 15°C e 19°C, com céu bem nublado e possibilidade de chuvas isoladas ao longo do dia. Dia perfeito pra um café quentinho naquele cantinho aconchegante ou pra curtir a vista do mar com moletom. Lua cheia à noite pra quem quiser apreciar! 🌕
+
+Qual seu programa favorito em dia nublado aqui em Ubatuba?
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba
+──────────────────────────────────────────────────
+2026-06-01 01:58:02,750 [INFO] 🎨 Gerando cards...
+2026-06-01 01:58:02,752 [ERROR] ❌ NotoColorEmoji não encontrada em: C:\Pessoal\Sites\AutoPostagem\fonts\NotoColorEmoji.ttf
+2026-06-01 01:58:02,753 [ERROR]    Certifique-se de que a pasta fonts/ está na mesma pasta do script.
+2026-06-01 01:58:02,755 [ERROR] ❌ Poppins-Bold ou DejaVuSans não encontradas em: C:\Pessoal\Sites\AutoPostagem/fonts/
+2026-06-01 01:58:04,260 [ERROR] ❌ NotoColorEmoji não encontrada em: C:\Pessoal\Sites\AutoPostagem\fonts\NotoColorEmoji.ttf
+2026-06-01 01:58:04,260 [ERROR]    Certifique-se de que a pasta fonts/ está na mesma pasta do script.
+2026-06-01 01:58:04,260 [ERROR] ❌ Poppins-Bold ou DejaVuSans não encontradas em: C:\Pessoal\Sites\AutoPostagem/fonts/
+2026-06-01 01:58:05,851 [INFO] ✅ Cards gerados.
+2026-06-01 01:58:05,851 [INFO] ☁️  Upload 'ubatuba_feed_20260601_0158' → ImgBB...
+2026-06-01 01:58:08,132 [INFO] ✅ Upload OK: https://i.ibb.co/S7D12HXR/ubatuba-feed-20260601-0158.jpg
+2026-06-01 01:58:08,135 [INFO] ☁️  Upload 'ubatuba_story_20260601_0158' → ImgBB...
+2026-06-01 01:58:10,351 [INFO] ✅ Upload OK: https://i.ibb.co/SXySLRnP/ubatuba-story-20260601-0158.jpg
+2026-06-01 01:58:10,354 [INFO] 📦 Criando container FEED...
+2026-06-01 01:58:14,929 [INFO] ✅ Container FEED: 18078331724639899
+2026-06-01 01:58:14,929 [INFO] 🚀 Publicando FEED...
+2026-06-01 01:58:23,752 [INFO] 🎉 FEED publicado! ID: 18001470068936767
+2026-06-01 01:58:31,757 [INFO] 📦 Criando container STORY...
+2026-06-01 01:58:34,759 [INFO] ✅ Container STORY: 18078331745639899
+2026-06-01 01:58:34,761 [INFO] 🚀 Publicando STORY...
+2026-06-01 01:58:42,615 [INFO] 🎉 STORY publicado! ID: 18134454619564007
+2026-06-01 01:58:42,615 [INFO] 🎉 Feed ✅ e Stories ✅ publicados!
+2026-06-01 02:00:44,870 [INFO] ============================================================
+2026-06-01 02:00:44,870 [INFO] 🤖 VIVENDO EM UBATUBA v3.1 — 01/06/2026 02:00
+2026-06-01 02:00:44,870 [INFO] ============================================================
+2026-06-01 02:00:44,870 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 02:00:45,559 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 02:00:47,715 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 02:00:49,907 [INFO]   ✅ 🎭 EVENTOS: 5 resultado(s)
+2026-06-01 02:00:52,128 [INFO]   ✅ 🏛️ UTILIDADE: 5 resultado(s)
+2026-06-01 02:00:53,641 [INFO] ✅ 4 categorias coletadas.
+2026-06-01 02:00:53,643 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 02:01:00,966 [INFO] ✅ Gerado — Categoria: TEMPO | Confiança: ALTA
+2026-06-01 02:01:00,967 [INFO] 
+📝 LEGENDA:
+──────────────────────────────────────────────────
+☁️ Segunda friinha em Ubatuba!
+
+Começou junho e o friozinho chegou de vez no litoral! Hoje a temperatura fica entre 15°C e 19°C, com nebulosidade alta e possibilidade de garoa. Dia perfeito pra curtir um café quentinho nas cafeterias do centro ou maratonar aquela série com vista pro mar. Se for sair, leva um casaquinho que à noite refresca mais.
+
+E aí, vocês curtem esse clima mais fresquinho ou preferem o calorzão?
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba
+──────────────────────────────────────────────────
+2026-06-01 02:01:00,967 [INFO] 🎨 Gerando cards...
+2026-06-01 02:01:00,967 [ERROR] ❌ NotoColorEmoji não encontrada em: C:\\Pessoal\\Sites\\AutoPostagem\\fonts\\NotoColorEmoji.ttf
+2026-06-01 02:01:00,967 [ERROR]    Certifique-se de que a pasta fonts/ está na mesma pasta do script.
+2026-06-01 02:01:00,972 [ERROR] ❌ Poppins-Bold ou DejaVuSans não encontradas em: C:\Pessoal\Sites\AutoPostagem/fonts/
+2026-06-01 02:01:01,386 [ERROR] ❌ NotoColorEmoji não encontrada em: C:\\Pessoal\\Sites\\AutoPostagem\\fonts\\NotoColorEmoji.ttf
+2026-06-01 02:01:01,386 [ERROR]    Certifique-se de que a pasta fonts/ está na mesma pasta do script.
+2026-06-01 02:01:01,389 [ERROR] ❌ Poppins-Bold ou DejaVuSans não encontradas em: C:\Pessoal\Sites\AutoPostagem/fonts/
+2026-06-01 02:01:01,923 [INFO] ✅ Cards gerados.
+2026-06-01 02:01:01,923 [INFO] ☁️  Upload 'ubatuba_feed_20260601_0201' → ImgBB...
+2026-06-01 02:01:04,188 [INFO] ✅ Upload OK: https://i.ibb.co/TVXNv33/ubatuba-feed-20260601-0201.jpg
+2026-06-01 02:01:04,191 [INFO] ☁️  Upload 'ubatuba_story_20260601_0201' → ImgBB...
+2026-06-01 02:01:06,552 [INFO] ✅ Upload OK: https://i.ibb.co/ZzwtbMLy/ubatuba-story-20260601-0201.jpg
+2026-06-01 02:01:06,557 [INFO] 📦 Criando container FEED...
+2026-06-01 02:01:10,222 [INFO] ✅ Container FEED: 18078331877639899
+2026-06-01 02:01:10,222 [INFO] 🚀 Publicando FEED...
+2026-06-01 02:01:18,250 [INFO] 🎉 FEED publicado! ID: 18090025874362898
+2026-06-01 02:01:26,255 [INFO] 📦 Criando container STORY...
+2026-06-01 02:01:28,954 [INFO] ✅ Container STORY: 18078331901639899
+2026-06-01 02:01:28,957 [INFO] 🚀 Publicando STORY...
+2026-06-01 02:01:36,411 [INFO] 🎉 STORY publicado! ID: 18066614690418766
+2026-06-01 02:01:36,411 [INFO] 🎉 Feed ✅ e Stories ✅ publicados!
+2026-06-01 02:02:40,209 [INFO] ============================================================
+2026-06-01 02:02:40,209 [INFO] 🤖 VIVENDO EM UBATUBA v3.1 — 01/06/2026 02:02
+2026-06-01 02:02:40,209 [INFO] ============================================================
+2026-06-01 02:02:40,209 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 02:02:40,912 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 02:02:43,072 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 02:02:45,219 [INFO]   ✅ 🎭 EVENTOS: 5 resultado(s)
+2026-06-01 02:02:51,099 [INFO]   ✅ 🏛️ UTILIDADE: 5 resultado(s)
+2026-06-01 02:02:52,601 [INFO] ✅ 4 categorias coletadas.
+2026-06-01 02:02:52,602 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 02:02:59,105 [INFO] ✅ Gerado — Categoria: TEMPO | Confiança: ALTA
+2026-06-01 02:02:59,105 [INFO] 
+📝 LEGENDA:
+──────────────────────────────────────────────────
+☔ Segunda chuvosa em Ubatuba!
+
+Começando junho com aquele climinha friozinho de litoral! Hoje a previsão é de céu bem nublado com chance de chuvas espalhadas durante o dia. A temperatura fica entre 15°C e 19°C — perfeito pra um café quentinho e aquela caminhada na orla vazia. Lua cheia no céu à noite pra quem quiser apreciar! 🌕
+
+Qual seu programa favorito em dia de chuva aqui em Ubatuba?
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba
+──────────────────────────────────────────────────
+2026-06-01 02:02:59,105 [INFO] 🎨 Gerando cards...
+2026-06-01 02:02:59,105 [ERROR] ❌ NotoColorEmoji não encontrada em: C:/Pessoal/Sites/AutoPostagem/fonts/NotoColorEmoji.ttf
+2026-06-01 02:02:59,105 [ERROR]    Certifique-se de que a pasta fonts/ está na mesma pasta do script.
+2026-06-01 02:02:59,118 [ERROR] ❌ Poppins-Bold ou DejaVuSans não encontradas em: C:\Pessoal\Sites\AutoPostagem/fonts/
+2026-06-01 02:02:59,569 [ERROR] ❌ NotoColorEmoji não encontrada em: C:/Pessoal/Sites/AutoPostagem/fonts/NotoColorEmoji.ttf
+2026-06-01 02:02:59,569 [ERROR]    Certifique-se de que a pasta fonts/ está na mesma pasta do script.
+2026-06-01 02:02:59,569 [ERROR] ❌ Poppins-Bold ou DejaVuSans não encontradas em: C:\Pessoal\Sites\AutoPostagem/fonts/
+2026-06-01 02:03:00,031 [INFO] ✅ Cards gerados.
+2026-06-01 02:03:00,031 [INFO] ☁️  Upload 'ubatuba_feed_20260601_0203' → ImgBB...
+2026-06-01 02:03:02,131 [INFO] ✅ Upload OK: https://i.ibb.co/LF3kbdj/ubatuba-feed-20260601-0203.jpg
+2026-06-01 02:03:02,131 [INFO] ☁️  Upload 'ubatuba_story_20260601_0203' → ImgBB...
+2026-06-01 02:03:04,357 [INFO] ✅ Upload OK: https://i.ibb.co/mVHSykHD/ubatuba-story-20260601-0203.jpg
+2026-06-01 02:03:04,357 [INFO] 📦 Criando container FEED...
+2026-06-01 02:03:08,667 [INFO] ✅ Container FEED: 18078332288639899
+2026-06-01 02:03:08,668 [INFO] 🚀 Publicando FEED...
+2026-06-01 02:03:17,074 [INFO] 🎉 FEED publicado! ID: 18016335572854522
+2026-06-01 02:03:25,076 [INFO] 📦 Criando container STORY...
+2026-06-01 02:03:28,420 [INFO] ✅ Container STORY: 18078332312639899
+2026-06-01 02:03:28,423 [INFO] 🚀 Publicando STORY...
+2026-06-01 02:03:35,747 [INFO] 🎉 STORY publicado! ID: 17953051779160753
+2026-06-01 02:03:35,747 [INFO] 🎉 Feed ✅ e Stories ✅ publicados!
+2026-06-01 02:05:11,000 [INFO] ============================================================
+2026-06-01 02:05:11,000 [INFO] 🤖 VIVENDO EM UBATUBA v3.1 — 01/06/2026 02:05
+2026-06-01 02:05:11,000 [INFO] ============================================================
+2026-06-01 02:05:11,000 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 02:05:11,695 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 02:05:13,929 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 02:05:16,094 [INFO]   ✅ 🎭 EVENTOS: 5 resultado(s)
+2026-06-01 02:05:18,264 [INFO]   ✅ 🏛️ UTILIDADE: 5 resultado(s)
+2026-06-01 02:05:19,777 [INFO] ✅ 4 categorias coletadas.
+2026-06-01 02:05:19,777 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 02:05:26,356 [INFO] ✅ Gerado — Categoria: TEMPO | Confiança: ALTA
+2026-06-01 02:05:26,356 [INFO] 
+📝 LEGENDA:
+──────────────────────────────────────────────────
+🌧️ Segunda chuvosa em Ubatuba!
+
+Começou junho e o tempo pede um bom casaco! Hoje a previsão é de céu bem nublado com chance de chuva a qualquer momento. A máxima não passa dos 19°C e a mínima fica nos 15°C. Dia perfeito pra curtir um café quente naquela padaria favorita ou maratonar série com a janela aberta pro barulhinho da chuva.
+
+E aí, qual seu programa favorito pra dias assim?
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba
+──────────────────────────────────────────────────
+2026-06-01 02:05:26,356 [INFO] 🎨 Gerando cards...
+2026-06-01 02:05:28,838 [INFO] ✅ Cards gerados.
+2026-06-01 02:05:28,838 [INFO] ☁️  Upload 'ubatuba_feed_20260601_0205' → ImgBB...
+2026-06-01 02:05:31,071 [INFO] ✅ Upload OK: https://i.ibb.co/BHZsjLbH/ubatuba-feed-20260601-0205.jpg
+2026-06-01 02:05:31,086 [INFO] ☁️  Upload 'ubatuba_story_20260601_0205' → ImgBB...
+2026-06-01 02:05:33,473 [INFO] ✅ Upload OK: https://i.ibb.co/PG5tJSyr/ubatuba-story-20260601-0205.jpg
+2026-06-01 02:05:33,489 [INFO] 📦 Criando container FEED...
+2026-06-01 02:05:36,903 [INFO] ✅ Container FEED: 18078332405639899
+2026-06-01 02:05:36,919 [INFO] 🚀 Publicando FEED...
+2026-06-01 02:05:44,372 [INFO] 🎉 FEED publicado! ID: 17907902895242008
+2026-06-01 02:05:52,376 [INFO] 📦 Criando container STORY...
+2026-06-01 02:05:56,414 [INFO] ✅ Container STORY: 18078332534639899
+2026-06-01 02:05:56,414 [INFO] 🚀 Publicando STORY...
+2026-06-01 02:06:04,393 [INFO] 🎉 STORY publicado! ID: 17908784043422001
+2026-06-01 02:06:04,393 [INFO] 🎉 Feed ✅ e Stories ✅ publicados!
+2026-06-01 02:19:27,986 [INFO] ============================================================
+2026-06-01 02:19:27,986 [INFO] 🤖 VIVENDO EM UBATUBA v3.1 — 01/06/2026 02:19
+2026-06-01 02:19:27,986 [INFO] ============================================================
+2026-06-01 02:19:27,986 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 02:19:28,688 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 02:19:32,963 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 02:19:37,025 [INFO]   ✅ 🎭 EVENTOS: 5 resultado(s)
+2026-06-01 02:19:39,398 [INFO]   ✅ 🏛️ UTILIDADE: 5 resultado(s)
+2026-06-01 02:19:40,899 [INFO] ✅ 4 categorias coletadas.
+2026-06-01 02:19:40,900 [INFO] 🧠 Gerando conteúdo com Claude...
+2026-06-01 02:19:48,163 [INFO] ✅ Gerado — Categoria: EVENTOS | Confiança: ALTA
+2026-06-01 02:19:48,165 [INFO] 
+📝 LEGENDA:
+──────────────────────────────────────────────────
+🎣 Festa de São Pedro vem aí!
+
+Junho chegou e com ele a tradição mais bonita do nosso litoral: a Festa de São Pedro Pescador! A 103ª edição promete emocionar com a famosa procissão marítima, onde os barcos enfeitados levam a imagem do padroeiro pelas águas de Ubatuba. É aquela celebração que une fé, cultura caiçara e aquele clima gostoso de comunidade. Quem é de Ubatuba sabe: não tem como perder!
+
+Qual sua lembrança mais especial da Festa de São Pedro?
+
+#ubatuba #vivendoubatuba #ubatubacity #litoralnorte #praiasubatuba #saopedropescador #festacaicara
+──────────────────────────────────────────────────
+2026-06-01 02:19:48,165 [INFO] 🎨 Gerando cards...
+2026-06-01 02:19:50,774 [INFO] ✅ Cards gerados.
+2026-06-01 02:19:50,775 [INFO] ☁️  Upload 'ubatuba_feed_20260601_0219' → ImgBB...
+2026-06-01 02:19:53,286 [INFO] ✅ Upload OK: https://i.ibb.co/BDSHvqh/ubatuba-feed-20260601-0219.jpg
+2026-06-01 02:19:53,288 [INFO] ☁️  Upload 'ubatuba_story_20260601_0219' → ImgBB...
+2026-06-01 02:19:56,144 [INFO] ✅ Upload OK: https://i.ibb.co/wFg0nx7v/ubatuba-story-20260601-0219.jpg
+2026-06-01 02:19:56,145 [INFO] 📦 Criando container FEED...
+2026-06-01 02:20:00,372 [INFO] ✅ Container FEED: 18078333767639899
+2026-06-01 02:20:00,374 [INFO] 🚀 Publicando FEED...
+2026-06-01 02:20:09,721 [INFO] 🎉 FEED publicado! ID: 18323378383287281
+2026-06-01 02:20:17,724 [INFO] 📦 Criando container STORY...
+2026-06-01 02:20:21,184 [INFO] ✅ Container STORY: 18078333803639899
+2026-06-01 02:20:21,185 [INFO] 🚀 Publicando STORY...
+2026-06-01 02:20:28,893 [INFO] 🎉 STORY publicado! ID: 17957801793131503
+2026-06-01 02:20:28,895 [INFO] 🎉 Feed ✅ e Stories ✅ publicados!
+2026-06-01 02:22:51,237 [INFO] ============================================================
+2026-06-01 02:22:51,237 [INFO] 🤖 VIVENDO EM UBATUBA v4.0 — 01/06/2026 02:22
+2026-06-01 02:22:51,237 [INFO] ============================================================
+2026-06-01 02:22:51,237 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 02:22:54,255 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 02:22:56,429 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 02:22:58,617 [INFO]   ✅ 🎭 EVENTOS: 5 resultado(s)
+2026-06-01 02:23:00,791 [INFO]   ✅ 🏛️ UTILIDADE: 5 resultado(s)
+2026-06-01 02:23:02,294 [INFO] ✅ 4 categorias coletadas.
+2026-06-01 02:23:02,295 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 02:23:02,296 [INFO] ☁️  PUBLICAÇÃO 1: Story Clima/Tempo
+2026-06-01 02:23:02,296 [INFO] ──────────────────────────────────────────────────
+2026-06-01 02:23:02,296 [INFO] 🌤️  Gerando Story de Clima...
+2026-06-01 02:23:08,841 [INFO] ✅ [CLIMA] gerado — Confiança: MEDIA
+2026-06-01 02:23:08,844 [INFO] 📝 Clima: 🌧️ Friozinho com chuvinha!
+2026-06-01 02:23:10,367 [INFO] ☁️  Upload 'ubatuba_clima_20260601_0223' → ImgBB...
+2026-06-01 02:23:13,273 [INFO] ✅ Upload OK: https://i.ibb.co/mCMFcVRV/ubatuba-clima-20260601-0223.jpg
+2026-06-01 02:23:13,273 [INFO] 📦 Criando container STORY...
+2026-06-01 02:23:16,757 [INFO] ✅ Container STORY: 18078334079639899
+2026-06-01 02:23:16,763 [INFO] 🚀 Publicando STORY CLIMA...
+2026-06-01 02:23:24,130 [INFO] 🎉 STORY CLIMA publicado! ID: 18075597416288696
+2026-06-01 02:23:24,133 [INFO] ✅ Story Clima publicado! ID: 18075597416288696
+2026-06-01 02:23:32,152 [INFO] 🔄 Próximo tema: TRANSITO (anterior: nenhum)
+2026-06-01 02:23:32,153 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 02:23:32,153 [INFO] 📌 PUBLICAÇÃO 2: Story + Feed — Tema: TRANSITO
+2026-06-01 02:23:32,153 [INFO] ──────────────────────────────────────────────────
+2026-06-01 02:23:32,153 [INFO] 📌 Gerando post temático: TRANSITO...
+2026-06-01 02:23:38,876 [INFO] ✅ [TRANSITO] gerado — Confiança: ALTA
+2026-06-01 02:23:38,876 [INFO] 📝 TRANSITO: Estrada liberada! 🛣️✅
+2026-06-01 02:23:40,874 [INFO] ☁️  Upload 'ubatuba_transito_feed_20260601_0223' → ImgBB...
+2026-06-01 02:23:43,520 [INFO] ✅ Upload OK: https://i.ibb.co/zHNsr84W/ubatuba-transito-feed-20260601-0223.jpg
+2026-06-01 02:23:43,522 [INFO] ☁️  Upload 'ubatuba_transito_story_20260601_0223' → ImgBB...
+2026-06-01 02:23:46,454 [INFO] ✅ Upload OK: https://i.ibb.co/20NFgSjw/ubatuba-transito-story-20260601-0223.jpg
+2026-06-01 02:23:46,458 [INFO] 📦 Criando container STORY...
+2026-06-01 02:23:49,811 [INFO] ✅ Container STORY: 18078334118639899
+2026-06-01 02:23:54,815 [INFO] 🚀 Publicando STORY TRANSITO...
+2026-06-01 02:24:02,101 [INFO] 🎉 STORY TRANSITO publicado! ID: 18025478255827353
+2026-06-01 02:24:10,104 [INFO] 📦 Criando container FEED...
+2026-06-01 02:24:13,524 [INFO] ✅ Container FEED: 18078334139639899
+2026-06-01 02:24:18,529 [INFO] 🚀 Publicando FEED TRANSITO...
+2026-06-01 02:24:26,393 [INFO] 🎉 FEED TRANSITO publicado! ID: 17916846816382404
+2026-06-01 02:24:26,408 [INFO] 
+============================================================
+2026-06-01 02:24:26,408 [INFO] 📊 RESUMO DA EXECUÇÃO:
+2026-06-01 02:24:26,409 [INFO]   ☁️  Story Clima:      ✅
+2026-06-01 02:24:26,414 [INFO]   📌 Story TRANSITO   ✅
+2026-06-01 02:24:26,414 [INFO]   📸 Feed TRANSITO    ✅
+2026-06-01 02:24:26,414 [INFO] ============================================================
+2026-06-01 10:07:16,151 [INFO] ============================================================
+2026-06-01 10:07:16,151 [INFO] 🤖 VIVENDO EM UBATUBA v4.0 — 01/06/2026 10:07
+2026-06-01 10:07:16,151 [INFO] ============================================================
+2026-06-01 10:07:16,151 [INFO] 🖼️  Imagem sorteada (1/1): http://wilianjanez.inf.br/images/images_autopost/foto01.png
+2026-06-01 10:07:16,151 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 10:07:19,998 [INFO]   ✅ 🚗 TRÂNSITO: 5 resultado(s)
+2026-06-01 10:07:24,903 [INFO]   ✅ 🌤️ TEMPO & PRAIAS: 5 resultado(s)
+2026-06-01 10:07:29,072 [INFO]   ✅ 🎭 EVENTOS: 5 resultado(s)
+2026-06-01 10:07:34,202 [INFO]   ✅ 🏛️ UTILIDADE: 5 resultado(s)
+2026-06-01 10:07:35,715 [INFO] ✅ 4 categorias coletadas.
+2026-06-01 10:07:35,715 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 10:07:35,715 [INFO] ☁️  PUBLICAÇÃO 1: Story Clima/Tempo
+2026-06-01 10:07:35,715 [INFO] ──────────────────────────────────────────────────
+2026-06-01 10:07:35,715 [INFO] 🌤️  Gerando Story de Clima...
+2026-06-01 10:07:42,515 [INFO] ✅ [CLIMA] gerado — Confiança: MEDIA
+2026-06-01 10:07:42,518 [INFO] 📝 Clima: ☀️ Sol de inverno chegou!
+2026-06-01 10:07:44,098 [INFO] ☁️  Upload 'ubatuba_clima_20260601_1007' → ImgBB...
+2026-06-01 10:07:47,232 [INFO] ✅ Upload OK: https://i.ibb.co/0RrTw3gR/ubatuba-clima-20260601-1007.jpg
+2026-06-01 10:07:47,242 [INFO] 📦 Criando container STORY...
+2026-06-01 10:07:52,420 [INFO] ✅ Container STORY: 18078377708639899
+2026-06-01 10:07:52,421 [INFO] 🚀 Publicando STORY CLIMA...
+2026-06-01 10:08:00,282 [INFO] 🎉 STORY CLIMA publicado! ID: 18117484732745114
+2026-06-01 10:08:00,299 [INFO] ✅ Story Clima publicado! ID: 18117484732745114
+2026-06-01 10:08:08,320 [INFO] 🔄 Próximo tema: PRAIAS (anterior: TRANSITO)
+2026-06-01 10:08:08,320 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 10:08:08,320 [INFO] 📌 PUBLICAÇÃO 2: Story + Feed — Tema: PRAIAS
+2026-06-01 10:08:08,320 [INFO] ──────────────────────────────────────────────────
+2026-06-01 10:08:08,321 [INFO] 📌 Gerando post temático: PRAIAS...
+2026-06-01 10:08:17,010 [INFO] ✅ [PRAIAS] gerado — Confiança: ALTA
+2026-06-01 10:08:17,012 [INFO] 📝 PRAIAS: Sol de inverno! ☀️🌊
+2026-06-01 10:08:18,881 [INFO] ☁️  Upload 'ubatuba_praias_feed_20260601_1007' → ImgBB...
+2026-06-01 10:08:21,734 [INFO] ✅ Upload OK: https://i.ibb.co/hRqtfBS2/ubatuba-praias-feed-20260601-1007.jpg
+2026-06-01 10:08:21,737 [INFO] ☁️  Upload 'ubatuba_praias_story_20260601_1007' → ImgBB...
+2026-06-01 10:08:24,667 [INFO] ✅ Upload OK: https://i.ibb.co/Rk1RZ4L7/ubatuba-praias-story-20260601-1007.jpg
+2026-06-01 10:08:24,667 [INFO] 📦 Criando container STORY...
+2026-06-01 10:08:28,416 [INFO] ✅ Container STORY: 18078377822639899
+2026-06-01 10:08:33,428 [INFO] 🚀 Publicando STORY PRAIAS...
+2026-06-01 10:08:41,094 [INFO] 🎉 STORY PRAIAS publicado! ID: 17880365058598334
+2026-06-01 10:08:49,105 [INFO] 📦 Criando container FEED...
+2026-06-01 10:08:55,259 [INFO] ✅ Container FEED: 18078377870639899
+2026-06-01 10:09:00,265 [INFO] 🚀 Publicando FEED PRAIAS...
+2026-06-01 10:09:09,320 [INFO] 🎉 FEED PRAIAS publicado! ID: 18101318630122567
+2026-06-01 10:09:09,320 [INFO] 
+============================================================
+2026-06-01 10:09:09,320 [INFO] 📊 RESUMO DA EXECUÇÃO:
+2026-06-01 10:09:09,320 [INFO]   ☁️  Story Clima:      ✅
+2026-06-01 10:09:09,320 [INFO]   📌 Story PRAIAS     ✅
+2026-06-01 10:09:09,320 [INFO]   📸 Feed PRAIAS      ✅
+2026-06-01 10:09:09,320 [INFO] ============================================================
+2026-06-01 10:57:31,482 [INFO] ============================================================
+2026-06-01 10:57:31,482 [INFO] 🤖 VIVENDO EM UBATUBA v5.0 — 01/06/2026 10:57
+2026-06-01 10:57:31,482 [INFO] ============================================================
+2026-06-01 10:57:31,482 [INFO] 🖼️  Imagem sorteada (1/1): http://wilianjanez.inf.br/images/images_autopost/foto01.png
+2026-06-01 10:57:31,482 [INFO] 📅 Dia: Segunda
+2026-06-01 10:57:31,482 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 10:57:31,482 [INFO] ☁️  PUBLICAÇÃO 1: Story Clima/Tempo
+2026-06-01 10:57:31,482 [INFO] ──────────────────────────────────────────────────
+2026-06-01 10:57:31,482 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 10:57:31,482 [INFO]    📍 Fontes prioritárias: ubatubatimes.com.br, ubatuba.sp.gov.br
+2026-06-01 10:57:31,482 [INFO]   📍 Camada 1 — fontes locais...
+2026-06-01 10:57:36,180 [INFO]     ✅ 📍 UBATUBA TIMES: 6 resultado(s)
+2026-06-01 10:57:42,182 [INFO]     ✅ 📍 PREFEITURA: 6 resultado(s)
+2026-06-01 10:57:48,013 [INFO]     ✅ 📍 LOCAL EVENTOS: 6 resultado(s)
+2026-06-01 10:57:49,216 [INFO]   🌐 Camada 2 — busca geral...
+2026-06-01 10:57:55,069 [INFO]     ✅ 🌤️ CLIMA & TEMPO: 3 resultado(s)
+2026-06-01 10:58:01,362 [INFO]     ✅ 🏖️ PRAIAS: 6 resultado(s)
+2026-06-01 10:58:07,683 [INFO]     ✅ 🎭 EVENTOS: 6 resultado(s)
+2026-06-01 10:58:14,108 [INFO]     ✅ 🍤 GASTRONOMIA: 6 resultado(s)
+2026-06-01 10:58:20,888 [INFO]     ✅ 🌿 NATUREZA: 6 resultado(s)
+2026-06-01 10:58:26,734 [INFO]     ✅ 🏄 SURF & MAR: 6 resultado(s)
+2026-06-01 10:58:33,404 [INFO]     ✅ 🎨 CULTURA: 6 resultado(s)
+2026-06-01 10:58:40,521 [INFO]     ✅ ✈️ TURISMO: 6 resultado(s)
+2026-06-01 10:58:41,724 [INFO]   ✅ Busca concluída: 11 blocos.
+2026-06-01 10:58:41,732 [INFO] 🌤️  Gerando Story de Clima...
+2026-06-01 10:58:41,733 [ERROR] ❌ Clima: name 'PROMPT_TEMPO' is not defined
+2026-06-01 10:58:49,734 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 10:58:49,734 [INFO] 📌 PUBLICAÇÃO 2: Notícia destaque do dia
+2026-06-01 10:58:49,734 [INFO] ──────────────────────────────────────────────────
+2026-06-01 10:58:49,734 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 10:58:49,734 [INFO]    📍 Fontes prioritárias: ubatubatimes.com.br, ubatuba.sp.gov.br
+2026-06-01 10:58:49,734 [INFO]   📍 Camada 1 — fontes locais...
+2026-06-01 10:58:50,422 [INFO]     ✅ 📍 UBATUBA TIMES: 6 resultado(s)
+2026-06-01 10:58:52,340 [INFO]     ✅ 📍 PREFEITURA: 6 resultado(s)
+2026-06-01 10:58:54,271 [INFO]     ✅ 📍 LOCAL EVENTOS: 6 resultado(s)
+2026-06-01 10:58:55,473 [INFO]   🌐 Camada 2 — busca geral...
+2026-06-01 10:58:58,973 [INFO]     ✅ 🌤️ CLIMA & TEMPO: 6 resultado(s)
+2026-06-01 10:59:00,878 [INFO]     ✅ 🏖️ PRAIAS: 6 resultado(s)
+2026-06-01 10:59:02,882 [INFO]     ✅ 🎭 EVENTOS: 6 resultado(s)
+2026-06-01 10:59:04,750 [INFO]     ✅ 🍤 GASTRONOMIA: 6 resultado(s)
+2026-06-01 10:59:06,656 [INFO]     ✅ 🌿 NATUREZA: 6 resultado(s)
+2026-06-01 10:59:08,795 [INFO]     ✅ 🏄 SURF & MAR: 6 resultado(s)
+2026-06-01 10:59:10,656 [INFO]     ✅ 🎨 CULTURA: 6 resultado(s)
+2026-06-01 10:59:12,586 [INFO]     ✅ ✈️ TURISMO: 6 resultado(s)
+2026-06-01 10:59:13,787 [INFO]   ✅ Busca concluída: 11 blocos.
+2026-06-01 10:59:13,787 [INFO] 📌 Selecionando conteúdo de maior impacto do dia...
+2026-06-01 10:59:13,787 [ERROR] ❌ IA Temático: name 'PROMPT_TEMATICO' is not defined
+2026-06-01 10:59:13,796 [INFO] 
+============================================================
+2026-06-01 10:59:13,796 [INFO] 📊 RESUMO DA EXECUÇÃO:
+2026-06-01 10:59:13,797 [INFO]   ☁️  Story Clima:   ❌
+2026-06-01 10:59:13,797 [INFO]   📌 Story [?]: ❌
+2026-06-01 10:59:13,797 [INFO]   📸 Feed  [?]: ❌
+2026-06-01 10:59:13,797 [INFO] ============================================================
+2026-06-01 11:04:19,945 [INFO] ============================================================
+2026-06-01 11:04:19,945 [INFO] 🤖 VIVENDO EM UBATUBA v5.0 — 01/06/2026 11:04
+2026-06-01 11:04:19,945 [INFO] ============================================================
+2026-06-01 11:04:19,945 [INFO] 🖼️  Imagem sorteada (1/1): http://wilianjanez.inf.br/images/images_autopost/foto01.png
+2026-06-01 11:04:19,945 [INFO] 📅 Dia: Segunda
+2026-06-01 11:04:19,945 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 11:04:19,945 [INFO] ☁️  PUBLICAÇÃO 1: Story Clima/Tempo
+2026-06-01 11:04:19,945 [INFO] ──────────────────────────────────────────────────
+2026-06-01 11:04:19,945 [INFO] 🌤️  Buscando clima — 01/06/2026...
+2026-06-01 11:04:23,184 [INFO]     ✅ 🌤️ CLIMA HOJE: 6 resultado(s)
+2026-06-01 11:04:29,320 [INFO]     ✅ 🏄 MAR & ONDAS: 6 resultado(s)
+2026-06-01 11:04:30,329 [INFO] 🌤️  Gerando Story de Clima...
+2026-06-01 11:04:36,660 [INFO] ✅ [CLIMA] gerado — Confiança: ALTA
+2026-06-01 11:04:36,660 [INFO] 📝 Clima: 🌧️ Garoa leve hoje!
+2026-06-01 11:04:38,164 [INFO] ☁️  Upload 'ubatuba_clima_20260601_1104' → ImgBB...
+2026-06-01 11:04:41,531 [INFO] ✅ Upload OK: https://i.ibb.co/21K5qzR9/ubatuba-clima-20260601-1104.jpg
+2026-06-01 11:04:41,531 [INFO] 📦 Criando container STORY...
+2026-06-01 11:04:46,049 [INFO] ✅ Container STORY: 18078385271639899
+2026-06-01 11:04:46,049 [INFO] 🚀 Publicando STORY CLIMA...
+2026-06-01 11:04:53,908 [INFO] 🎉 STORY CLIMA publicado! ID: 18144595591509070
+2026-06-01 11:04:53,919 [INFO] ✅ Story Clima publicado! ID: 18144595591509070
+2026-06-01 11:05:01,922 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 11:05:01,922 [INFO] 📌 PUBLICAÇÃO 2: Notícia destaque do dia
+2026-06-01 11:05:01,922 [INFO] ──────────────────────────────────────────────────
+2026-06-01 11:05:01,922 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 11:05:01,922 [INFO]    📍 Fontes prioritárias: ubatubatimes.com.br, ubatuba.sp.gov.br
+2026-06-01 11:05:01,922 [INFO]   📍 Camada 1 — fontes locais...
+2026-06-01 11:05:02,605 [INFO]     ✅ 📍 UBATUBA TIMES: 6 resultado(s)
+2026-06-01 11:05:04,475 [INFO]     ✅ 📍 PREFEITURA: 6 resultado(s)
+2026-06-01 11:05:06,370 [INFO]     ✅ 📍 LOCAL EVENTOS: 6 resultado(s)
+2026-06-01 11:05:07,572 [INFO]   🌐 Camada 2 — busca geral...
+2026-06-01 11:05:08,475 [INFO]     ✅ 🌤️ CLIMA & TEMPO: 6 resultado(s)
+2026-06-01 11:05:10,364 [INFO]     ✅ 🏖️ PRAIAS: 6 resultado(s)
+2026-06-01 11:05:12,289 [INFO]     ✅ 🎭 EVENTOS: 6 resultado(s)
+2026-06-01 11:05:14,206 [INFO]     ✅ 🍤 GASTRONOMIA: 6 resultado(s)
+2026-06-01 11:05:16,198 [INFO]     ✅ 🌿 NATUREZA: 6 resultado(s)
+2026-06-01 11:05:18,257 [INFO]     ✅ 🏄 SURF & MAR: 6 resultado(s)
+2026-06-01 11:05:20,151 [INFO]     ✅ 🎨 CULTURA: 6 resultado(s)
+2026-06-01 11:05:22,160 [INFO]     ✅ ✈️ TURISMO: 6 resultado(s)
+2026-06-01 11:05:23,361 [INFO]   ✅ Busca concluída: 11 blocos.
+2026-06-01 11:05:23,361 [INFO] 📌 Selecionando conteúdo de maior impacto do dia...
+2026-06-01 11:05:32,886 [INFO] ✅ [SELEÇÃO AUTOMÁTICA] gerado — Confiança: ALTA
+2026-06-01 11:05:32,888 [INFO] 📝 Tema: EVENTOS
+2026-06-01 11:05:32,888 [INFO] 💡 Motivo: O Festival da Cultura Japonesa começa em 3 dias, volta após 6 anos de pausa e espera 20 mil pessoas - é o evento mais aguardado do feriado de Corpus Christi
+2026-06-01 11:05:33,708 [INFO] ☁️  Upload 'ubatuba_eventos_story_20260601_1104' → ImgBB...
+2026-06-01 11:05:36,733 [INFO] ✅ Upload OK: https://i.ibb.co/9DLfWdX/ubatuba-eventos-story-20260601-1104.jpg
+2026-06-01 11:05:36,736 [INFO] ☁️  Upload 'ubatuba_eventos_feed_20260601_1104' → ImgBB...
+2026-06-01 11:05:39,447 [INFO] ✅ Upload OK: https://i.ibb.co/23snrMt2/ubatuba-eventos-feed-20260601-1104.jpg
+2026-06-01 11:05:39,450 [INFO] 📦 Criando container STORY...
+2026-06-01 11:05:44,103 [INFO] ✅ Container STORY: 18078385331639899
+2026-06-01 11:05:44,103 [INFO] 🚀 Publicando STORY EVENTOS...
+2026-06-01 11:05:52,626 [INFO] 🎉 STORY EVENTOS publicado! ID: 18081350372207044
+2026-06-01 11:06:00,630 [INFO] 📦 Criando container FEED...
+2026-06-01 11:06:05,505 [INFO] ✅ Container FEED: 18078385403639899
+2026-06-01 11:06:05,508 [INFO] 🚀 Publicando FEED EVENTOS...
+2026-06-01 11:06:13,935 [INFO] 🎉 FEED EVENTOS publicado! ID: 18184220464379822
+2026-06-01 11:06:13,938 [INFO] 
+============================================================
+2026-06-01 11:06:13,938 [INFO] 📊 RESUMO DA EXECUÇÃO:
+2026-06-01 11:06:13,938 [INFO]   ☁️  Story Clima:   ✅
+2026-06-01 11:06:13,939 [INFO]   📌 Story [EVENTOS]: ✅
+2026-06-01 11:06:13,939 [INFO]   📸 Feed  [EVENTOS]: ✅
+2026-06-01 11:06:13,939 [INFO] ============================================================
+2026-06-01 11:19:21,466 [INFO] ============================================================
+2026-06-01 11:19:21,466 [INFO] 🤖 VIVENDO EM UBATUBA v5.0 — 01/06/2026 11:19
+2026-06-01 11:19:21,466 [INFO] ============================================================
+2026-06-01 11:19:21,466 [INFO] 🖼️  Imagem sorteada (1/1): http://wilianjanez.inf.br/images/images_autopost/foto01.png
+2026-06-01 11:19:21,466 [INFO] 📅 Dia: Segunda
+2026-06-01 11:19:21,466 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 11:19:21,466 [INFO] ☁️  PUBLICAÇÃO 1: Story Clima/Tempo
+2026-06-01 11:19:21,466 [INFO] ──────────────────────────────────────────────────
+2026-06-01 11:19:21,466 [INFO] 🌤️  Buscando clima — 01/06/2026...
+2026-06-01 11:19:22,298 [INFO]     ✅ 🌤️ CLIMA HOJE: 6 resultado(s)
+2026-06-01 11:19:23,961 [INFO]     ✅ 🏄 MAR & ONDAS: 6 resultado(s)
+2026-06-01 11:19:24,971 [INFO] 🌤️  Gerando Story de Clima...
+2026-06-01 11:19:31,916 [INFO] ✅ [CLIMA] gerado — Confiança: ALTA
+2026-06-01 11:19:31,916 [INFO] 📝 Clima: 🌧️ Garoa leve hoje!
+2026-06-01 11:19:33,470 [INFO] ☁️  Upload 'ubatuba_clima_20260601_1119' → ImgBB...
+2026-06-01 11:19:36,404 [INFO] ✅ Upload OK: https://i.ibb.co/HDL9p2CS/ubatuba-clima-20260601-1119.jpg
+2026-06-01 11:19:36,404 [INFO] 📦 Criando container STORY...
+2026-06-01 11:19:40,606 [INFO] ✅ Container STORY: 18078387269639899
+2026-06-01 11:19:40,606 [INFO] 🚀 Publicando STORY CLIMA...
+2026-06-01 11:19:48,623 [INFO] 🎉 STORY CLIMA publicado! ID: 18331071127267173
+2026-06-01 11:19:48,639 [INFO] ✅ Story Clima publicado! ID: 18331071127267173
+2026-06-01 11:19:56,640 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 11:19:56,640 [INFO] 📌 PUBLICAÇÃO 2: Notícia destaque do dia
+2026-06-01 11:19:56,640 [INFO] ──────────────────────────────────────────────────
+2026-06-01 11:19:56,640 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 11:19:56,640 [INFO]    📍 Fontes prioritárias: ubatubatimes.com.br, ubatuba.sp.gov.br
+2026-06-01 11:19:56,642 [INFO]   📍 Camada 1 — fontes locais...
+2026-06-01 11:19:57,351 [INFO]     ✅ 📍 UBATUBA TIMES: 6 resultado(s)
+2026-06-01 11:19:59,210 [INFO]     ✅ 📍 PREFEITURA: 6 resultado(s)
+2026-06-01 11:20:01,054 [INFO]     ✅ 📍 LOCAL EVENTOS: 6 resultado(s)
+2026-06-01 11:20:02,268 [INFO]   🌐 Camada 2 — busca geral...
+2026-06-01 11:20:03,080 [INFO]     ✅ 🌤️ CLIMA & TEMPO: 6 resultado(s)
+2026-06-01 11:20:04,958 [INFO]     ✅ 🏖️ PRAIAS: 6 resultado(s)
+2026-06-01 11:20:06,807 [INFO]     ✅ 🎭 EVENTOS: 6 resultado(s)
+2026-06-01 11:20:08,685 [INFO]     ✅ 🍤 GASTRONOMIA: 6 resultado(s)
+2026-06-01 11:20:10,556 [INFO]     ✅ 🌿 NATUREZA: 6 resultado(s)
+2026-06-01 11:20:12,556 [INFO]     ✅ 🏄 SURF & MAR: 6 resultado(s)
+2026-06-01 11:20:14,431 [INFO]     ✅ 🎨 CULTURA: 6 resultado(s)
+2026-06-01 11:20:16,301 [INFO]     ✅ ✈️ TURISMO: 6 resultado(s)
+2026-06-01 11:20:17,502 [INFO]   ✅ Busca concluída: 11 blocos.
+2026-06-01 11:20:17,502 [INFO] 📌 Selecionando conteúdo de maior impacto do dia...
+2026-06-01 11:20:27,174 [INFO] ✅ [SELEÇÃO AUTOMÁTICA] gerado — Confiança: ALTA
+2026-06-01 11:20:27,177 [INFO] 📝 Tema: EVENTOS
+2026-06-01 11:20:27,177 [INFO] 💡 Motivo: O Festival da Cultura Japonesa começa em 3 dias, espera 20 mil pessoas e volta após 6 anos de ausência — evento raro e de grande impacto para o feriado de Corpus Christi.
+2026-06-01 11:20:28,968 [INFO] ☁️  Upload 'ubatuba_eventos_story_20260601_1119' → ImgBB...
+2026-06-01 11:20:32,030 [INFO] ✅ Upload OK: https://i.ibb.co/qYGnr7QR/ubatuba-eventos-story-20260601-1119.jpg
+2026-06-01 11:20:32,037 [INFO] ☁️  Upload 'ubatuba_eventos_feed_20260601_1119' → ImgBB...
+2026-06-01 11:20:34,772 [INFO] ✅ Upload OK: https://i.ibb.co/SXsbWJHC/ubatuba-eventos-feed-20260601-1119.jpg
+2026-06-01 11:20:34,772 [INFO] 📦 Criando container STORY...
+2026-06-01 11:20:39,775 [INFO] ✅ Container STORY: 18078387365639899
+2026-06-01 11:20:39,775 [INFO] 🚀 Publicando STORY EVENTOS...
+2026-06-01 11:20:47,680 [INFO] 🎉 STORY EVENTOS publicado! ID: 18066196862446824
+2026-06-01 11:20:55,693 [INFO] 📦 Criando container FEED...
+2026-06-01 11:21:01,068 [INFO] ✅ Container FEED: 18078387377639899
+2026-06-01 11:21:01,068 [INFO] 🚀 Publicando FEED EVENTOS...
+2026-06-01 11:21:09,490 [INFO] 🎉 FEED EVENTOS publicado! ID: 17953129827156416
+2026-06-01 11:21:09,510 [INFO] 
+============================================================
+2026-06-01 11:21:09,510 [INFO] 📊 RESUMO DA EXECUÇÃO:
+2026-06-01 11:21:09,510 [INFO]   ☁️  Story Clima:   ✅
+2026-06-01 11:21:09,510 [INFO]   📌 Story [EVENTOS]: ✅
+2026-06-01 11:21:09,510 [INFO]   📸 Feed  [EVENTOS]: ✅
+2026-06-01 11:21:09,510 [INFO] ============================================================
+2026-06-01 11:25:35,727 [INFO] ============================================================
+2026-06-01 11:25:35,727 [INFO] 🤖 VIVENDO EM UBATUBA v5.0 — 01/06/2026 11:25
+2026-06-01 11:25:35,727 [INFO] ============================================================
+2026-06-01 11:25:35,727 [INFO] 🖼️  Imagem sorteada (1/1): http://wilianjanez.inf.br/images/images_autopost/foto01.png
+2026-06-01 11:25:35,727 [INFO] 📅 Dia: Segunda
+2026-06-01 11:25:35,727 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 11:25:35,727 [INFO] ☁️  PUBLICAÇÃO 1: Story Clima/Tempo
+2026-06-01 11:25:35,727 [INFO] ──────────────────────────────────────────────────
+2026-06-01 11:25:35,727 [INFO] 🌤️  Buscando clima — 01/06/2026...
+2026-06-01 11:25:36,562 [INFO]     ✅ 🌤️ CLIMA HOJE: 6 resultado(s)
+2026-06-01 11:25:38,230 [INFO]     ✅ 🏄 MAR & ONDAS: 6 resultado(s)
+2026-06-01 11:25:39,231 [INFO] 🌤️  Gerando Story de Clima...
+2026-06-01 11:25:45,771 [INFO] ✅ [CLIMA] gerado — Confiança: ALTA
+2026-06-01 11:25:45,771 [INFO] 📝 Clima: 🌧️ Garoa moderada hoje!
+2026-06-01 11:25:47,225 [INFO] ☁️  Upload 'ubatuba_clima_20260601_1125' → ImgBB...
+2026-06-01 11:25:50,332 [INFO] ✅ Upload OK: https://i.ibb.co/SwBrc09R/ubatuba-clima-20260601-1125.jpg
+2026-06-01 11:25:50,333 [INFO] 📦 Criando container STORY...
+2026-06-01 11:25:55,651 [INFO] ✅ Container STORY: 18078387695639899
+2026-06-01 11:25:55,651 [INFO] 🚀 Publicando STORY CLIMA...
+2026-06-01 11:26:03,729 [INFO] 🎉 STORY CLIMA publicado! ID: 18050297627749827
+2026-06-01 11:26:03,729 [INFO] ✅ Story Clima publicado! ID: 18050297627749827
+2026-06-01 11:26:11,741 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 11:26:11,741 [INFO] 📌 PUBLICAÇÃO 2: Notícia destaque do dia
+2026-06-01 11:26:11,741 [INFO] ──────────────────────────────────────────────────
+2026-06-01 11:26:11,742 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 11:26:11,743 [INFO]    📍 Fontes prioritárias: ubatubatimes.com.br, ubatuba.sp.gov.br
+2026-06-01 11:26:11,743 [INFO]   📍 Camada 1 — fontes locais...
+2026-06-01 11:26:12,458 [INFO]     ✅ 📍 UBATUBA TIMES: 6 resultado(s)
+2026-06-01 11:26:14,342 [INFO]     ✅ 📍 PREFEITURA: 6 resultado(s)
+2026-06-01 11:26:16,353 [INFO]     ✅ 📍 LOCAL EVENTOS: 6 resultado(s)
+2026-06-01 11:26:17,558 [INFO]   🌐 Camada 2 — busca geral...
+2026-06-01 11:26:18,470 [INFO]     ✅ 🌤️ CLIMA & TEMPO: 6 resultado(s)
+2026-06-01 11:26:20,443 [INFO]     ✅ 🏖️ PRAIAS: 6 resultado(s)
+2026-06-01 11:26:22,343 [INFO]     ✅ 🎭 EVENTOS: 6 resultado(s)
+2026-06-01 11:26:24,241 [INFO]     ✅ 🍤 GASTRONOMIA: 6 resultado(s)
+2026-06-01 11:26:26,138 [INFO]     ✅ 🌿 NATUREZA: 6 resultado(s)
+2026-06-01 11:26:28,258 [INFO]     ✅ 🏄 SURF & MAR: 6 resultado(s)
+2026-06-01 11:26:30,148 [INFO]     ✅ 🎨 CULTURA: 6 resultado(s)
+2026-06-01 11:26:32,110 [INFO]     ✅ ✈️ TURISMO: 6 resultado(s)
+2026-06-01 11:26:33,311 [INFO]   ✅ Busca concluída: 11 blocos.
+2026-06-01 11:26:33,311 [INFO] 📌 Selecionando conteúdo de maior impacto do dia...
+2026-06-01 11:26:42,607 [INFO] ✅ [SELEÇÃO AUTOMÁTICA] gerado — Confiança: ALTA
+2026-06-01 11:26:42,609 [INFO] 📝 Tema: EVENTOS
+2026-06-01 11:26:42,609 [INFO] 💡 Motivo: Festival da Cultura Japonesa começa em 3 dias, espera 20 mil pessoas e marca retorno após 6 anos - maior evento da semana com apelo tanto para moradores quanto turistas do feriado de Corpus Christi.
+2026-06-01 11:26:43,380 [INFO] ☁️  Upload 'ubatuba_eventos_story_20260601_1125' → ImgBB...
+2026-06-01 11:26:46,536 [INFO] ✅ Upload OK: https://i.ibb.co/2BzbmCv/ubatuba-eventos-story-20260601-1125.jpg
+2026-06-01 11:26:46,539 [INFO] ☁️  Upload 'ubatuba_eventos_feed_20260601_1125' → ImgBB...
+2026-06-01 11:26:49,410 [INFO] ✅ Upload OK: https://i.ibb.co/vCdyXm2y/ubatuba-eventos-feed-20260601-1125.jpg
+2026-06-01 11:26:49,412 [INFO] 📦 Criando container STORY...
+2026-06-01 11:26:53,512 [INFO] ✅ Container STORY: 18078387818639899
+2026-06-01 11:26:53,512 [INFO] 🚀 Publicando STORY EVENTOS...
+2026-06-01 11:27:01,435 [INFO] 🎉 STORY EVENTOS publicado! ID: 18095341571589190
+2026-06-01 11:27:09,437 [INFO] 📦 Criando container FEED...
+2026-06-01 11:27:14,337 [INFO] ✅ Container FEED: 18078387836639899
+2026-06-01 11:27:14,339 [INFO] 🚀 Publicando FEED EVENTOS...
+2026-06-01 11:27:22,536 [INFO] 🎉 FEED EVENTOS publicado! ID: 18455770042112400
+2026-06-01 11:27:22,539 [INFO] 
+============================================================
+2026-06-01 11:27:22,540 [INFO] 📊 RESUMO DA EXECUÇÃO:
+2026-06-01 11:27:22,540 [INFO]   ☁️  Story Clima:   ✅
+2026-06-01 11:27:22,541 [INFO]   📌 Story [EVENTOS]: ✅
+2026-06-01 11:27:22,541 [INFO]   📸 Feed  [EVENTOS]: ✅
+2026-06-01 11:27:22,541 [INFO] ============================================================
+2026-06-01 11:30:35,877 [INFO] ============================================================
+2026-06-01 11:30:35,877 [INFO] 🤖 VIVENDO EM UBATUBA v5.0 — 01/06/2026 11:30
+2026-06-01 11:30:35,877 [INFO] ============================================================
+2026-06-01 11:30:35,877 [INFO] 🖼️  Imagem sorteada (17/17): http://wilianjanez.inf.br/images/images_autopost/foto17.png
+2026-06-01 11:30:35,877 [INFO] 📅 Dia: Segunda
+2026-06-01 11:30:35,878 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 11:30:35,878 [INFO] ☁️  PUBLICAÇÃO 1: Story Clima/Tempo
+2026-06-01 11:30:35,878 [INFO] ──────────────────────────────────────────────────
+2026-06-01 11:30:35,878 [INFO] 🌤️  Buscando clima — 01/06/2026...
+2026-06-01 11:30:36,728 [INFO]     ✅ 🌤️ CLIMA HOJE: 6 resultado(s)
+2026-06-01 11:30:38,402 [INFO]     ✅ 🏄 MAR & ONDAS: 6 resultado(s)
+2026-06-01 11:30:39,403 [INFO] 🌤️  Gerando Story de Clima...
+2026-06-01 11:30:45,845 [INFO] ✅ [CLIMA] gerado — Confiança: ALTA
+2026-06-01 11:30:45,848 [INFO] 📝 Clima: 🌧️ Garoa moderada hoje!
+2026-06-01 11:30:47,491 [INFO] ☁️  Upload 'ubatuba_clima_20260601_1130' → ImgBB...
+2026-06-01 11:30:50,636 [INFO] ✅ Upload OK: https://i.ibb.co/nMvdRWVR/ubatuba-clima-20260601-1130.jpg
+2026-06-01 11:30:50,638 [INFO] 📦 Criando container STORY...
+2026-06-01 11:30:54,980 [INFO] ✅ Container STORY: 18078388592639899
+2026-06-01 11:30:54,983 [INFO] 🚀 Publicando STORY CLIMA...
+2026-06-01 11:31:02,798 [INFO] 🎉 STORY CLIMA publicado! ID: 18129615808608956
+2026-06-01 11:31:02,800 [INFO] ✅ Story Clima publicado! ID: 18129615808608956
+2026-06-01 11:31:10,801 [INFO] 
+──────────────────────────────────────────────────
+2026-06-01 11:31:10,801 [INFO] 📌 PUBLICAÇÃO 2: Notícia destaque do dia
+2026-06-01 11:31:10,801 [INFO] ──────────────────────────────────────────────────
+2026-06-01 11:31:10,801 [INFO] 🔍 Buscando notícias — 01/06/2026...
+2026-06-01 11:31:10,801 [INFO]    📍 Fontes prioritárias: ubatubatimes.com.br, ubatuba.sp.gov.br
+2026-06-01 11:31:10,801 [INFO]   📍 Camada 1 — fontes locais...
+2026-06-01 11:31:15,079 [INFO]     ✅ 📍 UBATUBA TIMES: 6 resultado(s)
+2026-06-01 11:31:19,134 [INFO]     ✅ 📍 PREFEITURA: 6 resultado(s)
+2026-06-01 11:31:23,245 [INFO]     ✅ 📍 LOCAL EVENTOS: 6 resultado(s)
+2026-06-01 11:31:24,446 [INFO]   🌐 Camada 2 — busca geral...
+2026-06-01 11:31:27,938 [INFO]     ✅ 🌤️ CLIMA & TEMPO: 6 resultado(s)
+2026-06-01 11:31:35,176 [INFO]     ✅ 🏖️ PRAIAS: 6 resultado(s)
+2026-06-01 11:31:39,316 [INFO]     ✅ 🎭 EVENTOS: 6 resultado(s)
+2026-06-01 11:31:45,042 [INFO]     ✅ 🍤 GASTRONOMIA: 6 resultado(s)
+2026-06-01 11:31:49,636 [INFO]     ✅ 🌿 NATUREZA: 6 resultado(s)
+2026-06-01 11:31:54,190 [INFO]     ✅ 🏄 SURF & MAR: 6 resultado(s)
+2026-06-01 11:32:00,750 [INFO]     ✅ 🎨 CULTURA: 6 resultado(s)
+2026-06-01 11:32:05,082 [INFO]     ✅ ✈️ TURISMO: 6 resultado(s)
+2026-06-01 11:32:06,284 [INFO]   ✅ Busca concluída: 11 blocos.
+2026-06-01 11:32:06,284 [INFO] 📌 Selecionando conteúdo de maior impacto do dia...
+2026-06-01 11:32:15,033 [INFO] ✅ [SELEÇÃO AUTOMÁTICA] gerado — Confiança: ALTA
+2026-06-01 11:32:15,034 [INFO] 📝 Tema: EVENTOS
+2026-06-01 11:32:15,034 [INFO] 💡 Motivo: O Festival da Cultura Japonesa retorna após 6 anos, acontece de 04 a 07 de junho no feriado de Corpus Christi, com expectativa de 20 mil pessoas — evento iminente com alto apelo popular.
+2026-06-01 11:32:17,088 [INFO] ☁️  Upload 'ubatuba_eventos_story_20260601_1130' → ImgBB...
+2026-06-01 11:32:19,892 [INFO] ✅ Upload OK: https://i.ibb.co/M5QzPdWW/ubatuba-eventos-story-20260601-1130.jpg
+2026-06-01 11:32:19,896 [INFO] ☁️  Upload 'ubatuba_eventos_feed_20260601_1130' → ImgBB...
+2026-06-01 11:32:22,573 [INFO] ✅ Upload OK: https://i.ibb.co/dJgBchcb/ubatuba-eventos-feed-20260601-1130.jpg
+2026-06-01 11:32:22,575 [INFO] 📦 Criando container STORY...
+2026-06-01 11:32:26,807 [INFO] ✅ Container STORY: 18078388778639899
+2026-06-01 11:32:26,808 [INFO] 🚀 Publicando STORY EVENTOS...
+2026-06-01 11:32:34,432 [INFO] 🎉 STORY EVENTOS publicado! ID: 17982607643841063
+2026-06-01 11:32:42,435 [INFO] 📦 Criando container FEED...
+2026-06-01 11:32:48,028 [INFO] ✅ Container FEED: 18078388799639899
+2026-06-01 11:32:48,029 [INFO] 🚀 Publicando FEED EVENTOS...
+2026-06-01 11:32:56,804 [INFO] 🎉 FEED EVENTOS publicado! ID: 17930670672094053
+2026-06-01 11:32:56,808 [INFO] 
+============================================================
+2026-06-01 11:32:56,808 [INFO] 📊 RESUMO DA EXECUÇÃO:
+2026-06-01 11:32:56,808 [INFO]   ☁️  Story Clima:   ✅
+2026-06-01 11:32:56,808 [INFO]   📌 Story [EVENTOS]: ✅
+2026-06-01 11:32:56,808 [INFO]   📸 Feed  [EVENTOS]: ✅
+2026-06-01 11:32:56,808 [INFO] ============================================================
