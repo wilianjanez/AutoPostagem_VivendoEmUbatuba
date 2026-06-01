@@ -23,7 +23,10 @@ TAVILY_API_KEY    = os.getenv("TAVILY_API_KEY")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 IG_ACCESS_TOKEN   = os.getenv("IG_ACCESS_TOKEN")
 IG_USER_ID        = os.getenv("IG_USER_ID")
-IMGBB_API_KEY     = os.getenv("IMGBB_API_KEY")
+IMGBB_API_KEY         = os.getenv("IMGBB_API_KEY")
+YOUTUBE_CLIENT_ID     = os.getenv("YOUTUBE_CLIENT_ID")
+YOUTUBE_CLIENT_SECRET = os.getenv("YOUTUBE_CLIENT_SECRET")
+YOUTUBE_REFRESH_TOKEN = os.getenv("YOUTUBE_REFRESH_TOKEN")
 # Lista de imagens de fundo — separadas por vírgula no .env
 # Exemplo: FUNDO_URLS=https://foto1.jpg,https://foto2.jpg,https://foto3.jpg
 _FUNDOS_RAW = os.getenv("FUNDO_URLS", "")
@@ -32,6 +35,7 @@ FUNDO_URLS  = [u.strip() for u in _FUNDOS_RAW.split(",") if u.strip()]
 # Fontes na pasta /fonts do próprio projeto (independe do sistema operacional)
 _BASE      = os.path.dirname(os.path.abspath(__file__))
 FONT_BOLD  = os.getenv("FONT_BOLD_PATH",  os.path.join(_BASE, "fonts", "Poppins-Bold.ttf"))
+MUSIC_PATH = os.getenv("MUSIC_PATH", os.path.join(_BASE, "music", "background_music.mp3"))
 FONT_REG   = os.getenv("FONT_REG_PATH",   os.path.join(_BASE, "fonts", "DejaVuSans.ttf"))
 FONT_EMOJI = os.getenv("FONT_EMOJI_PATH", os.path.join(_BASE, "fonts", "NotoColorEmoji.ttf"))
 
@@ -848,6 +852,213 @@ def publicar_feed_e_stories(legenda, url_feed, url_story):
 # ORQUESTRADOR
 # =============================================================================
 
+# =============================================================================
+# YOUTUBE SHORTS — Geração de vídeo e publicação
+# =============================================================================
+
+def gerar_video_short(imagem_bytes: bytes, duracao: int = 10) -> bytes:
+    """
+    Converte um card JPEG em vídeo MP4 vertical (1080x1920) para YouTube Shorts.
+    Adiciona música de fundo se o arquivo existir em music/background_music.mp3.
+
+    Args:
+        imagem_bytes: Bytes da imagem JPEG do card gerado.
+        duracao:      Duração do vídeo em segundos (padrão: 10s).
+
+    Retorna:
+        bytes: Vídeo MP4 pronto para upload.
+    """
+    import tempfile
+    import numpy as np
+    from moviepy.editor import ImageClip, AudioFileClip, CompositeAudioClip
+
+    log.info(f"🎬 Gerando vídeo Short ({duracao}s)...")
+
+    # Converte bytes da imagem para array numpy
+    from PIL import Image as PILImage
+    img = PILImage.open(io.BytesIO(imagem_bytes)).convert("RGB")
+    # Garante resolução 1080x1920 (Stories/Shorts)
+    if img.size != (1080, 1920):
+        img = img.resize((1080, 1920), PILImage.LANCZOS)
+    img_array = np.array(img)
+
+    # Cria clip de imagem estática
+    clip = ImageClip(img_array, duration=duracao).set_fps(24)
+
+    # Adiciona música de fundo se disponível
+    if os.path.exists(MUSIC_PATH):
+        try:
+            audio = AudioFileClip(MUSIC_PATH)
+            # Recorta o áudio para a duração do vídeo
+            if audio.duration > duracao:
+                audio = audio.subclip(0, duracao)
+            # Fade in e fade out suaves
+            audio = audio.audio_fadein(0.5).audio_fadeout(1.0)
+            clip = clip.set_audio(audio)
+            log.info(f"🎵 Música adicionada: {MUSIC_PATH}")
+        except Exception as e:
+            log.warning(f"⚠️  Falha ao adicionar música: {e}. Vídeo será silencioso.")
+    else:
+        log.warning(f"⚠️  Música não encontrada em {MUSIC_PATH}. Vídeo será silencioso.")
+
+    # Salva em arquivo temporário e lê como bytes
+    with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as tmp:
+        tmp_path = tmp.name
+
+    try:
+        clip.write_videofile(
+            tmp_path,
+            fps=24,
+            codec="libx264",
+            audio_codec="aac",
+            verbose=False,
+            logger=None,
+            temp_audiofile=tmp_path + "_audio.m4a",
+        )
+        with open(tmp_path, "rb") as f:
+            video_bytes = f.read()
+        log.info(f"✅ Vídeo gerado: {len(video_bytes)/1024:.0f} KB")
+        return video_bytes
+    finally:
+        # Limpa arquivos temporários
+        for p in [tmp_path, tmp_path + "_audio.m4a"]:
+            try:
+                os.remove(p)
+            except FileNotFoundError:
+                pass
+
+
+def _obter_access_token_youtube() -> str:
+    """Obtém um Access Token válido usando o Refresh Token do YouTube."""
+    resp = requests.post(
+        "https://oauth2.googleapis.com/token",
+        data={
+            "client_id":     YOUTUBE_CLIENT_ID,
+            "client_secret": YOUTUBE_CLIENT_SECRET,
+            "refresh_token": YOUTUBE_REFRESH_TOKEN,
+            "grant_type":    "refresh_token",
+        },
+        timeout=15
+    )
+    resp.raise_for_status()
+    token = resp.json().get("access_token")
+    if not token:
+        raise ValueError(f"Sem access_token na resposta: {resp.json()}")
+    return token
+
+
+def publicar_youtube_short(
+    video_bytes: bytes,
+    titulo: str,
+    descricao: str,
+    tags: list = None,
+) -> str | None:
+    """
+    Publica um vídeo como YouTube Short (rascunho — requer aprovação manual).
+
+    O YouTube Short é identificado automaticamente quando:
+    - O vídeo é vertical (1080x1920)
+    - A duração é ≤ 60 segundos
+    - O título ou descrição contém #Shorts
+
+    Args:
+        video_bytes: Bytes do vídeo MP4.
+        titulo:      Título do Short.
+        descricao:   Descrição com hashtags.
+        tags:        Lista de tags opcionais.
+
+    Retorna:
+        str: ID do vídeo publicado, ou None em caso de falha.
+    """
+    import tempfile
+
+    log.info("📺 Publicando no YouTube Shorts...")
+
+    if not all([YOUTUBE_CLIENT_ID, YOUTUBE_CLIENT_SECRET, YOUTUBE_REFRESH_TOKEN]):
+        log.warning("⚠️  Credenciais do YouTube não configuradas — pulando.")
+        return None
+
+    try:
+        access_token = _obter_access_token_youtube()
+    except Exception as e:
+        log.error(f"❌ Falha ao obter access token YouTube: {e}")
+        return None
+
+    # Garante que #Shorts está na descrição (necessário para o algoritmo)
+    if "#Shorts" not in descricao and "#shorts" not in descricao:
+        descricao = "#Shorts\n\n" + descricao
+
+    # Metadados do vídeo
+    metadata = {
+        "snippet": {
+            "title":       titulo[:100],   # YouTube limita título a 100 chars
+            "description": descricao[:5000],
+            "tags":        (tags or []) + ["ubatuba", "shorts", "vivendoubatuba"],
+            "categoryId":  "22",           # 22 = People & Blogs
+        },
+        "status": {
+            "privacyStatus":           "public",
+            "selfDeclaredMadeForKids": False,
+        }
+    }
+
+    # Salva vídeo em arquivo temporário para upload
+    with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as tmp:
+        tmp.write(video_bytes)
+        tmp_path = tmp.name
+
+    try:
+        # Upload resumável — necessário para vídeos
+        # Etapa 1: Inicia o upload e obtém a URL de upload
+        init_resp = requests.post(
+            "https://www.googleapis.com/upload/youtube/v3/videos"
+            "?uploadType=resumable&part=snippet,status",
+            headers={
+                "Authorization":   f"Bearer {access_token}",
+                "Content-Type":    "application/json",
+                "X-Upload-Content-Type": "video/mp4",
+                "X-Upload-Content-Length": str(len(video_bytes)),
+            },
+            json=metadata,
+            timeout=30
+        )
+        init_resp.raise_for_status()
+        upload_url = init_resp.headers.get("Location")
+
+        if not upload_url:
+            raise ValueError("URL de upload não retornada pelo YouTube")
+
+        # Etapa 2: Envia o vídeo
+        with open(tmp_path, "rb") as f:
+            upload_resp = requests.put(
+                upload_url,
+                headers={
+                    "Content-Type":   "video/mp4",
+                    "Content-Length": str(len(video_bytes)),
+                },
+                data=f,
+                timeout=120
+            )
+        upload_resp.raise_for_status()
+
+        video_id = upload_resp.json().get("id")
+        log.info(f"🎉 YouTube Short publicado! ID: {video_id}")
+        log.info(f"   URL: https://youtube.com/shorts/{video_id}")
+        return video_id
+
+    except requests.exceptions.HTTPError as e:
+        log.error(f"❌ Erro HTTP YouTube: {e.response.status_code} — {e.response.text[:300]}")
+        return None
+    except Exception as e:
+        log.error(f"❌ Erro ao publicar no YouTube: {e}")
+        return None
+    finally:
+        try:
+            os.remove(tmp_path)
+        except FileNotFoundError:
+            pass
+
+
 def executar_agente():
     """
     Pipeline editorial por dia da semana:
@@ -922,16 +1133,32 @@ def executar_agente():
             story_clima_id = res.get("id")
             log.info(f"✅ Story Clima publicado! ID: {story_clima_id}")
         except Exception as e:
-            log.error(f"❌ Falha Story Clima: {e}")
+            log.error(f"❌ Falha Story Clima IG: {e}")
+
+        # YouTube Clima — independente do Instagram
+        try:
+            descricao_yt = f"{legenda_c}\n\n#Shorts #ubatuba #vivendoubatuba #clima"
+            video_bytes_c = gerar_video_short(bytes_sc, duracao=10)
+            youtube_clima_id = publicar_youtube_short(
+                video_bytes_c,
+                titulo=f"UBATUBA - {titulo_c}",
+                descricao=descricao_yt,
+                tags=["ubatuba", "clima", "tempo", "litoral norte"]
+            )
+        except Exception as e:
+            log.error(f"❌ YouTube Clima: {e}")
+            youtube_clima_id = None
 
     time.sleep(8)
 
     # ══════════════════════════════════════════════════════════════════════════
     # PUBLICAÇÃO 2A — SEXTA: Resumo da Semana
     # ══════════════════════════════════════════════════════════════════════════
-    story_p2_id = None
-    post_p2_id  = None
-    tema_log    = None
+    story_p2_id        = None
+    post_p2_id         = None
+    tema_log           = None
+    youtube_clima_id   = None
+    youtube_tematico_id = None
 
     if eh_sexta:
         log.info("\n" + "─"*50)
@@ -977,7 +1204,21 @@ def executar_agente():
                 post_p2_id = res.get("id")
 
             except Exception as e:
-                log.error(f"❌ Falha Resumo da Semana: {e}")
+                log.error(f"❌ Falha Resumo da Semana IG: {e}")
+
+            # YouTube Resumo — independente do Instagram
+            try:
+                descricao_yt = f"{legenda_r}\n\n#Shorts #ubatuba #vivendoubatuba #resumodasemana"
+                video_bytes_r = gerar_video_short(bytes_sr, duracao=10)
+                youtube_tematico_id = publicar_youtube_short(
+                    video_bytes_r,
+                    titulo="UBATUBA - Resumo da Semana",
+                    descricao=descricao_yt,
+                    tags=["ubatuba", "resumo", "semana", "litoral norte"]
+                )
+            except Exception as e:
+                log.error(f"❌ YouTube Resumo: {e}")
+                youtube_tematico_id = None
 
     # ══════════════════════════════════════════════════════════════════════════
     # PUBLICAÇÃO 2B — DEMAIS DIAS: Notícia destaque do dia
@@ -1013,20 +1254,45 @@ def executar_agente():
                 url_st    = fazer_upload_imgbb(bytes_st, f"ubatuba_{nome_tema}_story_{ts}")
                 url_ft    = fazer_upload_imgbb(bytes_ft, f"ubatuba_{nome_tema}_feed_{ts}")
 
-                # Story temático
-                cid = _criar_container(url_st, is_story=True)
-                res = _publicar_container(cid, f"STORY {tema_log}")
-                story_p2_id = res.get("id")
+                # Story temático — Instagram
+                story_p2_id = None
+                try:
+                    cid = _criar_container(url_st, is_story=True)
+                    res = _publicar_container(cid, f"STORY {tema_log}")
+                    story_p2_id = res.get("id")
+                except Exception as e:
+                    log.error(f"❌ Story IG {tema_log}: {e}")
 
                 time.sleep(8)
 
-                # Feed temático
-                cid = _criar_container(url_ft, legenda_t, is_story=False)
-                res = _publicar_container(cid, f"FEED {tema_log}")
-                post_p2_id = res.get("id")
+                # Feed temático — Instagram
+                post_p2_id = None
+                try:
+                    cid = _criar_container(url_ft, legenda_t, is_story=False)
+                    res = _publicar_container(cid, f"FEED {tema_log}")
+                    post_p2_id = res.get("id")
+                except Exception as e:
+                    log.error(f"❌ Feed IG {tema_log}: {e}")
+
+                time.sleep(5)
 
             except Exception as e:
                 log.error(f"❌ Falha post temático: {e}")
+
+            # YouTube — independente do Instagram
+            if tematico != "PULAR":
+                try:
+                    descricao_yt = f"{legenda_t}\n\n#Shorts {hashtags_t}"
+                    video_bytes_t = gerar_video_short(bytes_st, duracao=10)
+                    youtube_tematico_id = publicar_youtube_short(
+                        video_bytes_t,
+                        titulo=f"UBATUBA - {titulo_t}",
+                        descricao=descricao_yt,
+                        tags=["ubatuba", tema_log.lower() if tema_log else "ubatuba"]
+                    )
+                except Exception as e:
+                    log.error(f"❌ YouTube {tema_log}: {e}")
+                    youtube_tematico_id = None
 
     # ── Salva histórico ───────────────────────────────────────────────────────
     with open(HISTORICO, "a", encoding="utf-8") as f:
@@ -1043,13 +1309,16 @@ def executar_agente():
     # ── Resumo final ──────────────────────────────────────────────────────────
     log.info("\n" + "="*60)
     log.info("📊 RESUMO DA EXECUÇÃO:")
-    log.info(f"  ☁️  Story Clima:   {'✅' if story_clima_id else '❌'}")
+    log.info(f"  ☁️  Story Clima IG:    {'✅' if story_clima_id else '❌'}")
+    log.info(f"  📺 YouTube Clima:     {'✅' if youtube_clima_id else '❌'}")
     if eh_sexta:
-        log.info(f"  📋 Story Resumo:  {'✅' if story_p2_id else '❌'}")
-        log.info(f"  📋 Feed Resumo:   {'✅' if post_p2_id else '❌'}")
+        log.info(f"  📋 Story Resumo IG:  {'✅' if story_p2_id else '❌'}")
+        log.info(f"  📋 Feed Resumo IG:   {'✅' if post_p2_id else '❌'}")
+        log.info(f"  📺 YouTube Resumo:   {'✅' if youtube_tematico_id else '❌'}")
     else:
-        log.info(f"  📌 Story [{tema_log or '?'}]: {'✅' if story_p2_id else '❌'}")
-        log.info(f"  📸 Feed  [{tema_log or '?'}]: {'✅' if post_p2_id else '❌'}")
+        log.info(f"  📌 Story [{tema_log or '?'}] IG: {'✅' if story_p2_id else '❌'}")
+        log.info(f"  📸 Feed  [{tema_log or '?'}] IG: {'✅' if post_p2_id else '❌'}")
+        log.info(f"  📺 YouTube [{tema_log or '?'}]:  {'✅' if youtube_tematico_id else '❌'}")
     log.info("="*60)
     return True
 
