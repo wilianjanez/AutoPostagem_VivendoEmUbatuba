@@ -2,7 +2,7 @@ name: 🤖 Agente Vivendo em Ubatuba
 
 on:
   schedule:
-    - cron: "0 11 * * *"  # 08h00 BRT (11h00 UTC)
+    - cron: "0 9 * * *"  # 06h00 BRT (09h00 UTC)
   workflow_dispatch:
 
 jobs:
