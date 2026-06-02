@@ -8,7 +8,7 @@ EXECUÇÃO:      python agente_ubatuba.py
 =============================================================================
 """
 
-import os, io, re, json, time, base64, logging, requests, random
+import os, io, re, json, time, base64, logging, requests, random, ftplib
 from datetime import datetime
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw, ImageFont
@@ -27,6 +27,13 @@ IMGBB_API_KEY         = os.getenv("IMGBB_API_KEY")
 YOUTUBE_CLIENT_ID     = os.getenv("YOUTUBE_CLIENT_ID")
 YOUTUBE_CLIENT_SECRET = os.getenv("YOUTUBE_CLIENT_SECRET")
 YOUTUBE_REFRESH_TOKEN = os.getenv("YOUTUBE_REFRESH_TOKEN")
+
+# FTP — hospedagem temporária de vídeos para Instagram Stories
+FTP_HOST   = os.getenv("FTP_HOST",   "ftp.cojanez.cnt.br")
+FTP_USER   = os.getenv("FTP_USER",   "cojanez")
+FTP_PASS   = os.getenv("FTP_PASS",   "")   # ← OBRIGATÓRIO no .env: FTP_PASS=sua_senha
+FTP_PASTA  = os.getenv("FTP_PASTA",  "/Web/wilianjanez/movies/auto_post_vivendo")
+FTP_URL    = os.getenv("FTP_URL",    "https://wilianjanez.inf.br/movies/auto_post_vivendo")
 # Lista de imagens de fundo — separadas por vírgula no .env
 # Exemplo: FUNDO_URLS=https://foto1.jpg,https://foto2.jpg,https://foto3.jpg
 _FUNDOS_RAW = os.getenv("FUNDO_URLS", "")
@@ -166,15 +173,16 @@ def _buscar_tavily(query: str, categoria: str, hoje,
 
 def buscar_noticias_ubatuba() -> str:
     """
-    Busca notícias recentes sobre Ubatuba em duas camadas:
+    Busca notícias recentes sobre Ubatuba em duas etapas complementares:
 
-    CAMADA 1 — Fontes locais exclusivas:
-        Busca diretamente em ubatubatimes.com.br e ubatuba.sp.gov.br
-        via Tavily include_domains. Garante notícias hiperlocais.
+    ETAPA 1 — Fontes locais (adicional):
+        Busca em ubatubatimes.com.br e ubatuba.sp.gov.br para garantir
+        que notícias hiperlocais entrem no contexto. Os resultados são
+        adicionados ao pool geral — NÃO são priorizados sobre outros.
 
-    CAMADA 2 — Busca geral por categoria:
-        Tenta primeiro com fontes locais, depois abre para qualquer fonte.
-        Cobre: Clima, Praias, Eventos, Gastronomia, Natureza, Surf, Cultura, Turismo.
+    ETAPA 2 — Busca geral por categoria (todas as fontes):
+        8 categorias sem restrição de domínio. A IA decide o mais
+        relevante considerando TODAS as fontes de forma igualitária.
     """
     hoje     = datetime.now()
     data_br  = hoje.strftime("%d/%m/%Y")
@@ -182,29 +190,29 @@ def buscar_noticias_ubatuba() -> str:
     mes_ano  = hoje.strftime("%B de %Y")
 
     log.info(f"🔍 Buscando notícias — {data_br}...")
-    log.info(f"   📍 Fontes prioritárias: {', '.join(FONTES_LOCAIS)}")
+    log.info(f"   📍 Fontes locais incluídas: {', '.join(FONTES_LOCAIS)}")
 
     blocos = []
 
-    # ── CAMADA 1: Fontes locais exclusivas ────────────────────────────────────
-    log.info("  📍 Camada 1 — fontes locais...")
+    # ── ETAPA 1: Fontes locais (complementares, não restritivas) ──────────────
+    log.info("  📍 Etapa 1 — buscando nas fontes locais...")
     buscas_locais = [
         ("📍 UBATUBA TIMES",  f"Ubatuba notícias {mes_ano}"),
         ("📍 PREFEITURA",     f"Ubatuba prefeitura noticias eventos {mes_ano}"),
-        ("📍 LOCAL EVENTOS",  f"Ubatuba eventos programação {mes_ano}"),
     ]
     for categoria, query in buscas_locais:
+        # Busca exclusiva nas fontes locais para garantir que apareçam
         itens = _buscar_tavily(query, categoria, hoje,
                                include_domains=FONTES_LOCAIS, days=7)
         if itens:
-            blocos.append(f"=== {categoria} (FONTE LOCAL) ===\n" + "\n".join(itens))
+            blocos.append(f"=== {categoria} ===\n" + "\n".join(itens))
             log.info(f"    ✅ {categoria}: {len(itens)} resultado(s)")
         else:
-            log.info(f"    ⚠️  {categoria}: sem resultados nas fontes locais")
+            log.info(f"    ⚠️  {categoria}: sem resultados")
         time.sleep(1.2)
 
-    # ── CAMADA 2: Busca geral por categoria ───────────────────────────────────
-    log.info("  🌐 Camada 2 — busca geral...")
+    # ── ETAPA 2: Busca geral — todas as fontes, sem restrição ─────────────────
+    log.info("  🌐 Etapa 2 — busca geral por categoria (todas as fontes)...")
     buscas_gerais = {
         "🌤️ CLIMA & TEMPO":  f"Ubatuba previsão tempo temperatura chuva {data_ext}",
         "🏖️ PRAIAS":         f"Ubatuba praias condições mar bandeira qualidade água {data_ext}",
@@ -216,13 +224,9 @@ def buscar_noticias_ubatuba() -> str:
         "✈️ TURISMO":        f"Ubatuba turismo atrações roteiros pontos turísticos {mes_ano}",
     }
     for categoria, query in buscas_gerais.items():
-        # Tenta primeiro com fontes locais
+        # Sem include_domains — aceita qualquer fonte relevante
         itens = _buscar_tavily(query, categoria, hoje,
-                               include_domains=FONTES_LOCAIS, days=3)
-        # Se não encontrou nada, abre para qualquer fonte
-        if not itens:
-            itens = _buscar_tavily(query, categoria, hoje,
-                                   include_domains=None, days=3)
+                               include_domains=None, days=3)
         if itens:
             blocos.append(f"=== {categoria} ===\n" + "\n".join(itens))
             log.info(f"    ✅ {categoria}: {len(itens)} resultado(s)")
@@ -236,9 +240,9 @@ def buscar_noticias_ubatuba() -> str:
 
     cabecalho = (
         f"DATA DE HOJE: {data_br}\n"
-        f"FONTES LOCAIS: {', '.join(FONTES_LOCAIS)}\n"
-        f"Resultados marcados 📍LOCAL vêm diretamente dessas fontes — dê preferência a eles.\n"
         f"Use APENAS informações compatíveis com a data de hoje.\n"
+        f"Resultados de {', '.join(FONTES_LOCAIS)} estão incluídos mas\n"
+        f"a relevância deve ser decidida pelo conteúdo, não pela fonte.\n"
         f"{'='*60}\n"
     )
     log.info(f"  ✅ Busca concluída: {len(blocos)} blocos.")
@@ -278,7 +282,8 @@ MISSÃO: Analisar TODOS os dados e escolher O CONTEÚDO DE MAIOR IMPACTO do dia.
 
 FILTRAGEM: Nada de política, crimes ou tragédias — responda PULAR se só houver isso.
 DATA: Use APENAS informações compatíveis com a data de hoje. Se tudo parecer antigo: PULAR
-FONTES LOCAIS: Resultados marcados com 📍LOCAL têm prioridade máxima.
+FONTES LOCAIS: Resultados de ubatubatimes.com.br e ubatuba.sp.gov.br podem estar incluídos.
+Avalie-os pelo CONTEÚDO, não pela fonte — a relevância é o único critério.
 
 CRITÉRIO DE SELEÇÃO (escolha o melhor considerando):
 1. URGÊNCIA: acontece hoje ou nos próximos dias?
@@ -319,7 +324,7 @@ Você é o curador do perfil "Vivendo em Ubatuba" no Instagram.
 TAREFA: Criar o "Resumo da Semana" com as notícias mais relevantes dos últimos 7 dias.
 
 FILTRAGEM: Nada de política, crimes ou tragédias.
-FONTES LOCAIS: Dê preferência a resultados marcados com 📍LOCAL.
+FONTES LOCAIS: Resultados de sites locais podem estar incluídos — avalie pelo conteúdo e relevância.
 
 CRITÉRIO DE SELEÇÃO:
 - Selecione entre 5 e 10 notícias/fatos relevantes da semana
@@ -546,8 +551,11 @@ def buscar_noticias_semana() -> str:
 
     log.info("📋 Buscando notícias da semana (últimos 7 dias)...")
 
-    buscas_semana = [
-        ("📍 LOCAL SEMANA",  f"Ubatuba notícias semana {mes_ano}"),
+    # Busca complementar nas fontes locais
+    buscas_locais_semana = [
+        ("📍 LOCAL SEMANA", f"Ubatuba notícias semana {mes_ano}"),
+    ]
+    buscas_gerais_semana = [
         ("🏖️ PRAIAS SEMANA", f"Ubatuba praias mar condições semana {mes_ano}"),
         ("🎭 EVENTOS SEMANA", f"Ubatuba eventos shows festas {mes_ano}"),
         ("🍤 GASTRO SEMANA",  f"Ubatuba gastronomia restaurantes novidades {mes_ano}"),
@@ -556,13 +564,19 @@ def buscar_noticias_semana() -> str:
     ]
 
     blocos = []
-    for categoria, query in buscas_semana:
-        # Tenta fontes locais primeiro
+    # Fontes locais — incluídas como referência, não como filtro
+    for categoria, query in buscas_locais_semana:
         itens = _buscar_tavily(query, categoria, hoje,
                                include_domains=FONTES_LOCAIS, days=7)
-        if not itens:
-            itens = _buscar_tavily(query, categoria, hoje,
-                                   include_domains=None, days=7)
+        if itens:
+            blocos.append(f"=== {categoria} ===\n" + "\n".join(itens))
+            log.info(f"    ✅ {categoria}: {len(itens)} resultado(s)")
+        time.sleep(1.2)
+
+    # Busca geral — todas as fontes sem restrição
+    for categoria, query in buscas_gerais_semana:
+        itens = _buscar_tavily(query, categoria, hoje,
+                               include_domains=None, days=7)
         if itens:
             blocos.append(f"=== {categoria} ===\n" + "\n".join(itens))
             log.info(f"    ✅ {categoria}: {len(itens)} resultado(s)")
@@ -574,6 +588,7 @@ def buscar_noticias_semana() -> str:
     cabecalho = (
         f"DATA DE HOJE: {data_br} (SEXTA-FEIRA — RESUMO DA SEMANA)\n"
         f"Selecione as notícias mais relevantes dos últimos 7 dias.\n"
+        f"A relevância deve ser decidida pelo conteúdo, não pela fonte.\n"
         f"{'='*60}\n"
     )
     log.info(f"  ✅ Semana: {len(blocos)} blocos coletados.")
@@ -794,6 +809,75 @@ def fazer_upload_imgbb(imagem_bytes: bytes, nome: str) -> str:
 # =============================================================================
 # PASSO 5: PUBLICAÇÃO INSTAGRAM
 # =============================================================================
+
+def _aguardar_processamento_video(container_id: str,
+                                   tentativas: int = 15,
+                                   intervalo: int = 10) -> bool:
+    """
+    Consulta o status do container de vídeo até ficar FINISHED.
+    Tenta até `tentativas` vezes com `intervalo` segundos entre cada uma.
+    Retorna True se pronto, False se expirou ou deu erro.
+    """
+    endpoint = f"{INSTAGRAM_API_BASE}/{container_id}"
+    for i in range(1, tentativas + 1):
+        try:
+            resp = requests.get(
+                endpoint,
+                params={"fields": "status_code,status", "access_token": IG_ACCESS_TOKEN},
+                timeout=15
+            )
+            resp.raise_for_status()
+            dados        = resp.json()
+            status_code  = dados.get("status_code", "")
+            status_msg   = dados.get("status", "")
+            log.info(f"   ⏳ [{i}/{tentativas}] Status vídeo: {status_code} — {status_msg}")
+
+            if status_code == "FINISHED":
+                log.info("   ✅ Vídeo processado pelo Instagram!")
+                return True
+            if status_code == "ERROR":
+                log.error(f"   ❌ Instagram recusou o vídeo: {status_msg}")
+                return False
+
+            time.sleep(intervalo)
+        except Exception as e:
+            log.warning(f"   ⚠️  Erro ao verificar status ({i}/{tentativas}): {e}")
+            time.sleep(intervalo)
+
+    log.error(f"   ❌ Timeout: vídeo não ficou FINISHED após {tentativas} tentativas.")
+    return False
+
+
+def _criar_container_video(video_url: str, is_story: bool = True) -> str:
+    """
+    Cria container de VÍDEO na API Graph do Instagram para Stories em vídeo.
+    Aguarda o status FINISHED antes de retornar (evita erro 400 / subcode 2207027).
+    """
+    log.info("📦 Criando container de vídeo (STORY)...")
+    endpoint = f"{INSTAGRAM_API_BASE}/{IG_USER_ID}/media"
+    payload  = {
+        "video_url":    video_url,
+        "media_type":   "STORIES",
+        "access_token": IG_ACCESS_TOKEN,
+    }
+    try:
+        resp = requests.post(endpoint, data=payload, timeout=30)
+        resp.raise_for_status()
+        cid = resp.json().get("id")
+        if not cid:
+            raise ValueError(f"Sem ID: {resp.json()}")
+        log.info(f"✅ Container vídeo criado: {cid} — aguardando processamento...")
+
+        # Aguarda FINISHED em vez de sleep fixo
+        pronto = _aguardar_processamento_video(cid)
+        if not pronto:
+            raise RuntimeError(f"Vídeo {cid} não ficou pronto para publicação.")
+
+        return cid
+    except requests.exceptions.HTTPError as e:
+        log.error(f"❌ Erro container vídeo: {e.response.status_code} — {e.response.text}")
+        raise
+
 
 def _criar_container(imagem_url, legenda="", is_story=False):
     tipo = "STORY" if is_story else "FEED"
@@ -1059,6 +1143,69 @@ def publicar_youtube_short(
             pass
 
 
+# =============================================================================
+# FTP — Upload e delete de vídeos para Instagram Stories
+# =============================================================================
+
+def fazer_upload_ftp(video_bytes: bytes, nome_arquivo: str) -> str:
+    """
+    Faz upload de um vídeo MP4 para o servidor FTP e retorna a URL pública.
+    O arquivo fica disponível temporariamente para uso nas APIs.
+
+    Args:
+        video_bytes:   Bytes do vídeo MP4.
+        nome_arquivo:  Nome do arquivo (ex: 'clima_20260602.mp4').
+
+    Retorna:
+        str: URL pública do vídeo hospedado.
+    """
+    log.info(f"📤 Upload FTP: {nome_arquivo}...")
+    try:
+        ftp = ftplib.FTP()
+        ftp.connect(FTP_HOST, 21, timeout=30)
+        ftp.login(FTP_USER, FTP_PASS)
+        ftp.set_pasv(True)
+        ftp.cwd(FTP_PASTA)
+
+        # Upload do arquivo
+        ftp.storbinary(f"STOR {nome_arquivo}", io.BytesIO(video_bytes))
+        ftp.quit()
+
+        url = f"{FTP_URL.rstrip('/')}/{nome_arquivo}"
+        log.info(f"✅ Upload FTP OK: {url}")
+        return url
+
+    except Exception as e:
+        log.error(f"❌ Erro no upload FTP: {e}")
+        raise
+
+
+def deletar_ftp(nome_arquivo: str) -> bool:
+    """
+    Deleta um arquivo do servidor FTP após a publicação.
+
+    Args:
+        nome_arquivo: Nome do arquivo a deletar.
+
+    Retorna:
+        bool: True se deletado com sucesso.
+    """
+    log.info(f"🗑️  Deletando do FTP: {nome_arquivo}...")
+    try:
+        ftp = ftplib.FTP()
+        ftp.connect(FTP_HOST, 21, timeout=30)
+        ftp.login(FTP_USER, FTP_PASS)
+        ftp.set_pasv(True)
+        ftp.cwd(FTP_PASTA)
+        ftp.delete(nome_arquivo)
+        ftp.quit()
+        log.info(f"✅ Arquivo deletado do FTP: {nome_arquivo}")
+        return True
+    except Exception as e:
+        log.warning(f"⚠️  Falha ao deletar {nome_arquivo} do FTP: {e}")
+        return False
+
+
 def executar_agente():
     """
     Pipeline editorial por dia da semana:
@@ -1086,6 +1233,9 @@ def executar_agente():
         if not val:
             log.error(f"❌ '{nome}' não configurado no .env")
             return False
+
+    if not FTP_PASS:
+        log.warning("⚠️  FTP_PASS vazio — Stories em vídeo falharão (erro 530). Adicione FTP_PASS no .env")
 
     if not FUNDO_URLS:
         log.error("❌ 'FUNDO_URLS' vazio — adicione ao menos uma URL no .env")
@@ -1126,19 +1276,31 @@ def executar_agente():
             hashtags_c  = clima["hashtags"]
             legenda_c   = f"{titulo_c}\n\n{corpo_c}\n\n{cta_c}\n\n{hashtags_c}"
             log.info(f"📝 Clima: {titulo_c}")
-            bytes_sc  = gerar_card(titulo_c, subtitulo_c, fundo_do_dia, (1080, 1920))
-            url_sc    = fazer_upload_imgbb(bytes_sc, f"ubatuba_clima_{ts}")
-            cid       = _criar_container(url_sc, is_story=True)
-            res       = _publicar_container(cid, "STORY CLIMA")
+
+            # Gera imagem e converte em vídeo (usado em ambas as plataformas)
+            bytes_sc_img  = gerar_card(titulo_c, subtitulo_c, fundo_do_dia, (1080, 1920))
+            video_bytes_c = gerar_video_short(bytes_sc_img, duracao=10)
+
+            # Sobe vídeo no FTP e publica no Instagram Stories como vídeo
+            nome_video_c  = f"clima_{ts}.mp4"
+            url_video_ftp = fazer_upload_ftp(video_bytes_c, nome_video_c)
+            cid = _criar_container_video(url_video_ftp, is_story=True)
+            res = _publicar_container(cid, "STORY CLIMA (vídeo)")
             story_clima_id = res.get("id")
-            log.info(f"✅ Story Clima publicado! ID: {story_clima_id}")
+            log.info(f"✅ Story Clima (vídeo) publicado! ID: {story_clima_id}")
+            deletar_ftp(nome_video_c)
+
         except Exception as e:
             log.error(f"❌ Falha Story Clima IG: {e}")
+            video_bytes_c = None
 
         # YouTube Clima — independente do Instagram
         try:
             descricao_yt = f"{legenda_c}\n\n#Shorts #ubatuba #vivendoubatuba #clima"
-            video_bytes_c = gerar_video_short(bytes_sc, duracao=10)
+            # Reutiliza video_bytes_c já gerado acima (evita regerar e corrige
+            # o NameError 'bytes_sc is not defined' que existia aqui antes)
+            if video_bytes_c is None:
+                video_bytes_c = gerar_video_short(bytes_sc_img, duracao=10)
             youtube_clima_id = publicar_youtube_short(
                 video_bytes_c,
                 titulo=f"UBATUBA - {titulo_c}",
@@ -1154,11 +1316,12 @@ def executar_agente():
     # ══════════════════════════════════════════════════════════════════════════
     # PUBLICAÇÃO 2A — SEXTA: Resumo da Semana
     # ══════════════════════════════════════════════════════════════════════════
-    story_p2_id        = None
-    post_p2_id         = None
-    tema_log           = None
-    youtube_clima_id   = None
+    story_p2_id         = None
+    post_p2_id          = None
+    tema_log            = None
     youtube_tematico_id = None
+    # Nota: youtube_clima_id e video_bytes_c já foram definidos no bloco de
+    # Publicação 1 — NÃO resetar aqui para não apagar o resultado do clima.
 
     if eh_sexta:
         log.info("\n" + "─"*50)
