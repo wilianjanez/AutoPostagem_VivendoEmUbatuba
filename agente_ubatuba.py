@@ -1020,6 +1020,7 @@ def gerar_video_short(imagem_bytes: bytes, duracao: int = 10) -> bytes:
             fps=24,
             codec="libx264",
             audio_codec="aac",
+            ffmpeg_params=["-pix_fmt", "yuv420p", "-profile:v", "baseline", "-level", "3.1"],
             verbose=False,
             logger=None,
             temp_audiofile=tmp_path + "_audio.m4a",
