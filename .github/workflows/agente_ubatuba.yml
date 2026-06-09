@@ -39,6 +39,10 @@ jobs:
           echo "FTP_PASS=${{ secrets.FTP_PASS }}" >> .env
           echo "FTP_PASTA=${{ secrets.FTP_PASTA }}" >> .env
           echo "FTP_URL=${{ secrets.FTP_URL }}" >> .env
+          echo "FUNDO_SOL_URLS=${{ secrets.FUNDO_SOL_URLS }}" >> .env
+          echo "FUNDO_CHUVA_URLS=${{ secrets.FUNDO_CHUVA_URLS }}" >> .env
+          echo "FUNDO_NUBLADO_URLS=${{ secrets.FUNDO_NUBLADO_URLS }}" >> .env
+          echo "FUNDO_TEMPESTADE_URLS=${{ secrets.FUNDO_TEMPESTADE_URLS }}" >> .env          
       - name: 🚀 Executar agente
         run: python agente_ubatuba.py
       - name: 📋 Salvar log de execução
