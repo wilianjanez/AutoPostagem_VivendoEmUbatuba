@@ -39,6 +39,15 @@ FTP_URL    = os.getenv("FTP_URL",    "https://wilianjanez.inf.br/movies/auto_pos
 _FUNDOS_RAW = os.getenv("FUNDO_URLS", "")
 FUNDO_URLS  = [u.strip() for u in _FUNDOS_RAW.split(",") if u.strip()]
 
+# Listas de fundo temáticas para o Story de Clima (opcionais — fallback para FUNDO_URLS)
+# Exemplo: FUNDO_SOL_URLS=https://foto_sol1.jpg,https://foto_sol2.jpg
+FUNDO_CLIMA: dict[str, list[str]] = {
+    "SOL":        [u.strip() for u in os.getenv("FUNDO_SOL_URLS",        "").split(",") if u.strip()],
+    "CHUVA":      [u.strip() for u in os.getenv("FUNDO_CHUVA_URLS",      "").split(",") if u.strip()],
+    "NUBLADO":    [u.strip() for u in os.getenv("FUNDO_NUBLADO_URLS",    "").split(",") if u.strip()],
+    "TEMPESTADE": [u.strip() for u in os.getenv("FUNDO_TEMPESTADE_URLS", "").split(",") if u.strip()],
+}
+
 # Fontes na pasta /fonts do próprio projeto (independe do sistema operacional)
 _BASE      = os.path.dirname(os.path.abspath(__file__))
 FONT_BOLD  = os.getenv("FONT_BOLD_PATH",  os.path.join(_BASE, "fonts", "Poppins-Bold.ttf"))
@@ -60,6 +69,20 @@ logging.basicConfig(
     ]
 )
 log = logging.getLogger(__name__)
+
+
+def _escolher_fundo_clima(condicao: str) -> str:
+    """Retorna URL de fundo adequada à condição meteorológica.
+    Usa a lista temática se configurada, caso contrário sorteia de FUNDO_URLS."""
+    lista = FUNDO_CLIMA.get(condicao.upper(), [])
+    if lista:
+        url = random.choice(lista)
+        log.info(f"🖼️  Fundo clima '{condicao}' — {lista.index(url)+1}/{len(lista)}: {url}")
+        return url
+    url = random.choice(FUNDO_URLS)
+    log.info(f"🖼️  Fundo clima '{condicao}' sem lista específica — usando aleatório: {url}")
+    return url
+
 
 # =============================================================================
 # PASSO 1: CAPTURA DE DADOS
@@ -264,6 +287,7 @@ FONTES LOCAIS: Prefira resultados marcados com 📍LOCAL.
 
 SAÍDA — JSON puro sem markdown:
 {
+  "condicao": "SOL | CHUVA | NUBLADO | TEMPESTADE | VARIAVEL",
   "confianca": "ALTA | MEDIA | BAIXA",
   "titulo": "frase impacto com 1 emoji de clima — MÁXIMO 4 PALAVRAS — ex: '☀️ Dia lindo hoje!'",
   "subtitulo": "temperatura + condição resumida — MÁXIMO 10 PALAVRAS",
@@ -271,6 +295,7 @@ SAÍDA — JSON puro sem markdown:
   "cta": "pergunta sobre o que as pessoas vão fazer com esse tempo hoje",
   "hashtags": "#ubatuba #vivendoubatuba #tempohoje #praiasubatuba #litoralnorte"
 }
+REGRA condicao: escolha UMA — SOL (ensolarado/quente), CHUVA (chuva leve/moderada), NUBLADO (nuvens sem chuva), TEMPESTADE (temporal/chuva forte/trovões), VARIAVEL (parcialmente nublado/incerto).
 TOM: animado, leve, como um amigo que mora na cidade.
 """
 
@@ -1274,11 +1299,14 @@ def executar_agente():
             corpo_c     = clima["corpo"]
             cta_c       = clima["cta"]
             hashtags_c  = clima["hashtags"]
+            condicao_c  = clima.get("condicao", "VARIAVEL")
             legenda_c   = f"{titulo_c}\n\n{corpo_c}\n\n{cta_c}\n\n{hashtags_c}"
-            log.info(f"📝 Clima: {titulo_c}")
+            log.info(f"📝 Clima: {titulo_c} [{condicao_c}]")
+
+            fundo_clima = _escolher_fundo_clima(condicao_c)
 
             # Gera imagem e converte em vídeo (usado em ambas as plataformas)
-            bytes_sc_img  = gerar_card(titulo_c, subtitulo_c, fundo_do_dia, (1080, 1920))
+            bytes_sc_img  = gerar_card(titulo_c, subtitulo_c, fundo_clima, (1080, 1920))
             video_bytes_c = gerar_video_short(bytes_sc_img, duracao=10)
 
             # Sobe vídeo no FTP e publica no Instagram Stories como vídeo
