@@ -299,25 +299,24 @@ REGRA condicao: escolha UMA — SOL (ensolarado/quente), CHUVA (chuva leve/moder
 TOM: animado, leve, como um amigo que mora na cidade.
 """
 
-# Prompt 2 — Post temático (melhor notícia do dia — seg a qui, sáb e dom)
+# Prompt 2 — Post temático (top 5 notícias do dia — seg a qui, sáb e dom)
 PROMPT_TEMATICO = """
 Você é o curador do perfil "Vivendo em Ubatuba" no Instagram.
 
-MISSÃO: Analisar TODOS os dados e escolher O CONTEÚDO DE MAIOR IMPACTO do dia.
+MISSÃO: Analisar TODOS os dados e listar OS 5 CONTEÚDOS DE MAIOR IMPACTO do dia, do mais ao menos relevante.
 
 FILTRAGEM: Nada de política, crimes ou tragédias — responda PULAR se só houver isso.
 DATA: Use APENAS informações compatíveis com a data de hoje. Se tudo parecer antigo: PULAR
 FONTES LOCAIS: Resultados de ubatubatimes.com.br e ubatuba.sp.gov.br podem estar incluídos.
 Avalie-os pelo CONTEÚDO, não pela fonte — a relevância é o único critério.
 
-CRITÉRIO DE SELEÇÃO (escolha o melhor considerando):
+CRITÉRIO DE SELEÇÃO (avalie cada candidato considerando):
 1. URGÊNCIA: acontece hoje ou nos próximos dias?
 2. IMPACTO: afeta ou interessa muita gente?
 3. EXCLUSIVIDADE: é algo que as pessoas não saberiam sem ver o post?
 4. ENGAJAMENTO: gera comentários, compartilhamentos, identificação?
 
-TEMAS DISPONÍVEIS (escolha apenas 1, o melhor do dia):
-PRAIAS | EVENTOS | GASTRONOMIA | NATUREZA | TURISMO | SURF | CULTURA
+TEMAS DISPONÍVEIS: PRAIAS | EVENTOS | GASTRONOMIA | NATUREZA | TURISMO | SURF | CULTURA
 
 HASHTAGS POR TEMA:
 - PRAIAS:      #ubatuba #praiasubatuba #vivendoubatuba #litoralnorte #ubatubacity
@@ -330,15 +329,21 @@ HASHTAGS POR TEMA:
 
 SAÍDA — JSON puro sem markdown:
 {
-  "tema": "PRAIAS | EVENTOS | GASTRONOMIA | NATUREZA | TURISMO | SURF | CULTURA",
   "confianca": "ALTA | MEDIA | BAIXA",
-  "motivo_escolha": "1 frase explicando por que esse tema foi o mais relevante hoje",
-  "titulo": "frase impacto com 1-2 emojis — MÁXIMO 4 PALAVRAS — vai enorme na imagem",
-  "subtitulo": "dado-chave — MÁXIMO 10 PALAVRAS — vai menor na imagem",
-  "corpo": "3-4 frases completas para a legenda. Tom nativo, leve, com dica prática local.",
-  "cta": "pergunta curta e aberta para engajar comentários",
-  "hashtags": "use as hashtags do tema escolhido"
+  "candidatos": [
+    {
+      "posicao": 1,
+      "tema": "PRAIAS | EVENTOS | GASTRONOMIA | NATUREZA | TURISMO | SURF | CULTURA",
+      "motivo_escolha": "1 frase explicando por que este conteúdo é relevante hoje",
+      "titulo": "frase impacto com 1-2 emojis — MÁXIMO 4 PALAVRAS — vai enorme na imagem",
+      "subtitulo": "dado-chave — MÁXIMO 10 PALAVRAS — vai menor na imagem",
+      "corpo": "3-4 frases completas para a legenda. Tom nativo, leve, com dica prática local.",
+      "cta": "pergunta curta e aberta para engajar comentários",
+      "hashtags": "use as hashtags do tema escolhido"
+    }
+  ]
 }
+REGRAS: sempre 5 candidatos (posicao 1 a 5). Se não houver 5 notícias distintas: repita temas com ângulos diferentes.
 TOM: nativo da cidade, leve, positivo, como quem mora lá.
 """
 
@@ -373,7 +378,7 @@ TOM: leve, positivo, como um amigo contando o que rolou na cidade.
 """
 
 
-def _chamar_claude(system_prompt: str, user_msg: str, label: str) -> dict | str:
+def _chamar_claude(system_prompt: str, user_msg: str, label: str, max_tokens: int = 1024) -> dict | str:
     """Chama a API do Claude e retorna dict com o JSON ou 'PULAR'."""
     try:
         resp = requests.post(
@@ -385,7 +390,7 @@ def _chamar_claude(system_prompt: str, user_msg: str, label: str) -> dict | str:
             },
             json={
                 "model": "claude-opus-4-5",
-                "max_tokens": 1024,
+                "max_tokens": max_tokens,
                 "system": system_prompt,
                 "messages": [{"role": "user", "content": user_msg}],
             },
@@ -430,20 +435,32 @@ def gerar_conteudo_clima(noticias: str) -> dict | str:
 
 def gerar_conteudo_tematico(noticias: str) -> dict | str:
     """
-    Analisa TODOS os dados coletados e escolhe o conteúdo
-    de maior impacto para o público neste dia — sem tema fixo.
-    A IA decide qual tema é mais relevante.
+    Analisa TODOS os dados coletados e monta um top 5 de conteúdos relevantes.
+    Sorteia aleatoriamente um dos 5 para publicar — evita repetição ao longo dos dias.
     """
     if not noticias.strip():
         return "PULAR"
 
-    log.info("📌 Selecionando conteúdo de maior impacto do dia...")
-    return _chamar_claude(
+    log.info("📌 Gerando top 5 de conteúdos do dia...")
+    resultado = _chamar_claude(
         PROMPT_TEMATICO,
         "Dados coletados de TODOS os temas:\n\n" + noticias +
-        "\n\nAnalise tudo acima e escolha O CONTEÚDO DE MAIOR IMPACTO para o público hoje.",
-        "SELEÇÃO AUTOMÁTICA"
+        "\n\nAnalise tudo acima e liste OS 5 CONTEÚDOS DE MAIOR IMPACTO para o público hoje.",
+        "TOP 5",
+        max_tokens=3000,
     )
+
+    if resultado == "PULAR":
+        return "PULAR"
+
+    candidatos = resultado.get("candidatos", [])
+    if not candidatos:
+        log.error("❌ Top 5 retornou lista vazia.")
+        return "PULAR"
+
+    escolhido = random.choice(candidatos)
+    log.info(f"🎲 Sorteado {escolhido.get('posicao','?')}/{len(candidatos)}: [{escolhido.get('tema','?')}] {escolhido.get('titulo','?')}")
+    return escolhido
 
 
 # =============================================================================
