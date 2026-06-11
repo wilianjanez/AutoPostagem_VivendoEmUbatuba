@@ -42,7 +42,8 @@ jobs:
           echo "FUNDO_SOL_URLS=${{ secrets.FUNDO_SOL_URLS }}" >> .env
           echo "FUNDO_CHUVA_URLS=${{ secrets.FUNDO_CHUVA_URLS }}" >> .env
           echo "FUNDO_NUBLADO_URLS=${{ secrets.FUNDO_NUBLADO_URLS }}" >> .env
-          echo "FUNDO_TEMPESTADE_URLS=${{ secrets.FUNDO_TEMPESTADE_URLS }}" >> .env          
+          echo "FUNDO_TEMPESTADE_URLS=${{ secrets.FUNDO_TEMPESTADE_URLS }}" >> .env
+          echo "OPENWEATHER_API_KEY=${{ secrets.OPENWEATHER_API_KEY }}" >> .env
       - name: 🚀 Executar agente
         run: python agente_ubatuba.py
       - name: 📋 Salvar log de execução

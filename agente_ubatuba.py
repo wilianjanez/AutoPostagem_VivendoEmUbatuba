@@ -27,6 +27,7 @@ IMGBB_API_KEY         = os.getenv("IMGBB_API_KEY")
 YOUTUBE_CLIENT_ID     = os.getenv("YOUTUBE_CLIENT_ID")
 YOUTUBE_CLIENT_SECRET = os.getenv("YOUTUBE_CLIENT_SECRET")
 YOUTUBE_REFRESH_TOKEN = os.getenv("YOUTUBE_REFRESH_TOKEN")
+OPENWEATHER_API_KEY   = os.getenv("OPENWEATHER_API_KEY")
 
 # FTP — hospedagem temporária de vídeos para Instagram Stories
 FTP_HOST   = os.getenv("FTP_HOST",   "ftp.cojanez.cnt.br")
@@ -88,10 +89,108 @@ def _escolher_fundo_clima(condicao: str) -> str:
 # PASSO 1: CAPTURA DE DADOS
 # =============================================================================
 
+def buscar_clima_openweather() -> str:
+    """Busca clima atual + previsão do dia via OpenWeatherMap. Retorna bloco formatado ou ''."""
+    if not OPENWEATHER_API_KEY:
+        return ""
+    log.info("🌤️  Buscando clima via OpenWeatherMap...")
+    try:
+        r_atual = requests.get(
+            "https://api.openweathermap.org/data/2.5/weather",
+            params={"q": "Ubatuba,BR", "appid": OPENWEATHER_API_KEY, "units": "metric", "lang": "pt_br"},
+            timeout=15,
+        )
+        r_atual.raise_for_status()
+        atual = r_atual.json()
+
+        r_prev = requests.get(
+            "https://api.openweathermap.org/data/2.5/forecast",
+            params={"q": "Ubatuba,BR", "appid": OPENWEATHER_API_KEY, "units": "metric", "lang": "pt_br", "cnt": 8},
+            timeout=15,
+        )
+        r_prev.raise_for_status()
+        previsao = r_prev.json()
+
+        temp      = atual["main"]["temp"]
+        temp_min  = atual["main"]["temp_min"]
+        temp_max  = atual["main"]["temp_max"]
+        sensacao  = atual["main"]["feels_like"]
+        umidade   = atual["main"]["humidity"]
+        descricao = atual["weather"][0]["description"]
+        vento_kmh = round(atual["wind"]["speed"] * 3.6)
+
+        proximas = []
+        for item in previsao["list"][:4]:
+            hora = datetime.fromtimestamp(item["dt"]).strftime("%Hh")
+            t    = item["main"]["temp"]
+            desc = item["weather"][0]["description"]
+            proximas.append(f"  {hora}: {t:.0f}°C, {desc}")
+
+        log.info(f"✅ OpenWeatherMap: {temp:.0f}°C, {descricao}")
+        return (
+            f"=== 🌤️ CLIMA ATUAL ===\n"
+            f"  Temperatura: {temp:.0f}°C (sensação {sensacao:.0f}°C)\n"
+            f"  Mín/Máx: {temp_min:.0f}°C / {temp_max:.0f}°C\n"
+            f"  Condição: {descricao}\n"
+            f"  Umidade: {umidade}%\n"
+            f"  Vento: {vento_kmh} km/h\n\n"
+            f"=== 🔮 PREVISÃO PRÓXIMAS HORAS ===\n"
+            + "\n".join(proximas)
+        )
+    except requests.exceptions.RequestException as e:
+        log.warning(f"⚠️  Erro OpenWeatherMap: {e}")
+        return ""
+
+
+def buscar_mar_open_meteo() -> str:
+    """Busca condições do mar via Open-Meteo Marine API (gratuita, sem API key). Retorna bloco ou ''."""
+    log.info("🏄 Buscando mar via Open-Meteo Marine...")
+    try:
+        r = requests.get(
+            "https://marine-api.open-meteo.com/v1/marine",
+            params={
+                "latitude":      -23.43,
+                "longitude":     -45.08,
+                "hourly":        "wave_height,wave_period",
+                "timezone":      "America/Sao_Paulo",
+                "forecast_days": 1,
+            },
+            timeout=15,
+        )
+        r.raise_for_status()
+        hourly = r.json().get("hourly", {})
+
+        times    = hourly.get("time", [])
+        alturas  = hourly.get("wave_height", [])
+        periodos = hourly.get("wave_period", [])
+
+        agora  = datetime.now().hour
+        linhas = []
+        for i, t in enumerate(times):
+            hora = int(t[11:13])
+            if hora >= agora and len(linhas) < 4 and i < len(alturas) and alturas[i] is not None:
+                per = periodos[i] if i < len(periodos) and periodos[i] is not None else None
+                linhas.append(
+                    f"  {hora:02d}h: ondas {alturas[i]:.1f}m, período {per:.0f}s"
+                    if per else f"  {hora:02d}h: ondas {alturas[i]:.1f}m"
+                )
+
+        if not linhas:
+            return ""
+
+        log.info(f"✅ Open-Meteo Marine: {linhas[0].strip()}")
+        return "=== 🏄 MAR & ONDAS ===\n" + "\n".join(linhas)
+
+    except requests.exceptions.RequestException as e:
+        log.warning(f"⚠️  Erro Open-Meteo Marine: {e}")
+        return ""
+
+
 def buscar_clima_apenas() -> str:
     """
-    Busca APENAS dados de clima e tempo para o Story diário de Clima.
-    Focada e rápida — evita buscas desnecessárias de outros temas.
+    Busca dados de clima para o Story diário.
+    Prioriza OpenWeatherMap + Open-Meteo Marine (sem consumir créditos Tavily).
+    Fallback para Tavily se as APIs diretas falharem.
     """
     hoje     = datetime.now()
     data_br  = hoje.strftime("%d/%m/%Y")
@@ -99,19 +198,30 @@ def buscar_clima_apenas() -> str:
 
     log.info(f"🌤️  Buscando clima — {data_br}...")
 
-    buscas_clima = [
-        ("🌤️ CLIMA HOJE",    f"Ubatuba previsão tempo temperatura chuva {data_ext}"),
-        ("🏄 MAR & ONDAS",   f"Ubatuba condições mar ondas vento {data_ext}"),
-    ]
+    # APIs diretas — não consomem créditos Tavily
+    bloco_clima = buscar_clima_openweather()
+    bloco_mar   = buscar_mar_open_meteo()
 
+    if bloco_clima or bloco_mar:
+        blocos    = [b for b in [bloco_clima, bloco_mar] if b]
+        cabecalho = (
+            f"DATA DE HOJE: {data_br}\n"
+            f"Use APENAS informações de clima e tempo.\n"
+            f"{'='*60}\n"
+        )
+        return cabecalho + "\n\n".join(blocos)
+
+    # Fallback: Tavily
+    log.info("⚠️  APIs diretas falharam — tentando Tavily...")
+    buscas_clima = [
+        ("🌤️ CLIMA HOJE",  f"Ubatuba previsão tempo temperatura chuva {data_ext}"),
+        ("🏄 MAR & ONDAS", f"Ubatuba condições mar ondas vento {data_ext}"),
+    ]
     blocos = []
     for categoria, query in buscas_clima:
-        # Tenta fontes locais primeiro
-        itens = _buscar_tavily(query, categoria, hoje,
-                               include_domains=FONTES_LOCAIS, days=1)
+        itens = _buscar_tavily(query, categoria, hoje, include_domains=FONTES_LOCAIS, days=1)
         if not itens:
-            itens = _buscar_tavily(query, categoria, hoje,
-                                   include_domains=None, days=1)
+            itens = _buscar_tavily(query, categoria, hoje, include_domains=None, days=1)
         if itens:
             blocos.append(f"=== {categoria} ===\n" + "\n".join(itens))
             log.info(f"    ✅ {categoria}: {len(itens)} resultado(s)")
@@ -145,7 +255,7 @@ def _buscar_tavily(query: str, categoria: str, hoje,
     payload = {
         "api_key": TAVILY_API_KEY,
         "query": query,
-        "search_depth": "advanced",
+        "search_depth": "basic",
         "include_answer": True,
         "include_raw_content": False,
         "max_results": 5 if include_domains else 4,
@@ -291,6 +401,7 @@ SAÍDA — JSON puro sem markdown:
   "confianca": "ALTA | MEDIA | BAIXA",
   "titulo": "frase impacto com 1 emoji de clima — MÁXIMO 4 PALAVRAS — ex: '☀️ Dia lindo hoje!'",
   "subtitulo": "temperatura + condição resumida — MÁXIMO 10 PALAVRAS",
+  "temperaturas": "linha curta com mín e máx — ex: '🌡️ Mín: 22°C | Máx: 29°C' — se não houver dados: null",
   "corpo": "2-3 frases sobre o tempo do dia, previsão e dica de praia. Tom leve e nativo.",
   "cta": "pergunta sobre o que as pessoas vão fazer com esse tempo hoje",
   "hashtags": "#ubatuba #vivendoubatuba #tempohoje #praiasubatuba #litoralnorte"
@@ -1309,7 +1420,8 @@ def executar_agente():
     except Exception as e:
         log.error(f"❌ Clima: {e}"); clima = "PULAR"
 
-    story_clima_id = None
+    story_clima_id   = None
+    youtube_clima_id = None
     if clima != "PULAR":
         try:
             titulo_c    = clima["titulo"]
@@ -1318,7 +1430,8 @@ def executar_agente():
             cta_c       = clima["cta"]
             hashtags_c  = clima["hashtags"]
             condicao_c  = clima.get("condicao", "VARIAVEL")
-            legenda_c   = f"{titulo_c}\n\n{corpo_c}\n\n{cta_c}\n\n{hashtags_c}"
+            temps_c     = clima.get("temperaturas") or ""
+            legenda_c   = f"{titulo_c}\n\n{temps_c + chr(10) if temps_c else ''}{corpo_c}\n\n{cta_c}\n\n{hashtags_c}"
             log.info(f"📝 Clima: {titulo_c} [{condicao_c}]")
 
             fundo_clima = _escolher_fundo_clima(condicao_c)
