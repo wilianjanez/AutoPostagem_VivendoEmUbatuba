@@ -202,7 +202,10 @@ def buscar_clima_apenas() -> str:
     bloco_clima = buscar_clima_openweather()
     bloco_mar   = buscar_mar_open_meteo()
 
-    if bloco_clima or bloco_mar:
+    # Só pula o Tavily se o OpenWeatherMap retornou dados de temperatura/condição.
+    # Apenas dados de ondas (Open-Meteo) não são suficientes para o Claude gerar
+    # conteúdo de clima com confiança.
+    if bloco_clima:
         blocos    = [b for b in [bloco_clima, bloco_mar] if b]
         cabecalho = (
             f"DATA DE HOJE: {data_br}\n"
@@ -211,14 +214,17 @@ def buscar_clima_apenas() -> str:
         )
         return cabecalho + "\n\n".join(blocos)
 
-    # Fallback: Tavily
-    log.info("⚠️  APIs diretas falharam — tentando Tavily...")
-    buscas_clima = [
-        ("🌤️ CLIMA HOJE",  f"Ubatuba previsão tempo temperatura chuva {data_ext}"),
-        ("🏄 MAR & ONDAS", f"Ubatuba condições mar ondas vento {data_ext}"),
-    ]
+    # Fallback: Tavily (busca clima; Open-Meteo Marine é adicionado se disponível)
+    log.info("⚠️  OpenWeatherMap indisponível — tentando Tavily para dados de clima...")
+    buscas_tavily = [("🌤️ CLIMA HOJE", f"Ubatuba previsão tempo temperatura chuva {data_ext}")]
+    if not bloco_mar:
+        buscas_tavily.append(("🏄 MAR & ONDAS", f"Ubatuba condições mar ondas vento {data_ext}"))
+
     blocos = []
-    for categoria, query in buscas_clima:
+    if bloco_mar:
+        blocos.append(bloco_mar)   # inclui dados de ondas já obtidos
+
+    for categoria, query in buscas_tavily:
         itens = _buscar_tavily(query, categoria, hoje, include_domains=FONTES_LOCAIS, days=1)
         if not itens:
             itens = _buscar_tavily(query, categoria, hoje, include_domains=None, days=1)
