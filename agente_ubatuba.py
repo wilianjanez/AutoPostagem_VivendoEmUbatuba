@@ -1560,14 +1560,25 @@ def executar_agente():
             bytes_sc_img  = gerar_card(titulo_c, subtitulo_c, fundo_clima, (1080, 1920))
             video_bytes_c = gerar_video_short(bytes_sc_img, duracao=10)
 
-            # Sobe vídeo no FTP e publica no Instagram Stories como vídeo
-            nome_video_c  = f"clima_{ts}.mp4"
-            url_video_ftp = fazer_upload_ftp(video_bytes_c, nome_video_c)
-            cid = _criar_container_video(url_video_ftp, is_story=True)
-            res = _publicar_container(cid, "STORY CLIMA (vídeo)")
-            story_clima_id = res.get("id")
-            log.info(f"✅ Story Clima (vídeo) publicado! ID: {story_clima_id}")
-            deletar_ftp(nome_video_c)
+            # Tenta Story como vídeo; fallback automático para imagem se falhar
+            try:
+                nome_video_c  = f"clima_{ts}.mp4"
+                url_video_ftp = fazer_upload_ftp(video_bytes_c, nome_video_c)
+                cid = _criar_container_video(url_video_ftp, is_story=True)
+                res = _publicar_container(cid, "STORY CLIMA (vídeo)")
+                story_clima_id = res.get("id")
+                log.info(f"✅ Story Clima (vídeo) publicado! ID: {story_clima_id}")
+                deletar_ftp(nome_video_c)
+            except Exception as e_video:
+                log.warning(f"⚠️  Story vídeo falhou ({e_video}) — publicando como imagem...")
+                try:
+                    url_img_c = fazer_upload_imgbb(bytes_sc_img, f"ubatuba_clima_story_{ts}")
+                    cid = _criar_container(url_img_c, is_story=True)
+                    res = _publicar_container(cid, "STORY CLIMA (imagem)")
+                    story_clima_id = res.get("id")
+                    log.info(f"✅ Story Clima (imagem fallback) publicado! ID: {story_clima_id}")
+                except Exception as e_img:
+                    log.error(f"❌ Story Clima imagem também falhou: {e_img}")
 
         except Exception as e:
             log.error(f"❌ Falha Story Clima IG: {e}")
