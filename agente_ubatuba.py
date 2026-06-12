@@ -1140,17 +1140,11 @@ def _criar_container_video(video_url: str, is_story: bool = True) -> str:
             return cid
 
         except requests.exceptions.HTTPError as e:
-            dados = {}
-            try:
-                dados = e.response.json()
-            except Exception:
-                pass
-            is_transient = dados.get("is_transient", False)
             log.error(f"❌ Erro container vídeo ({tentativa}/{max_tentativas}): "
                       f"{e.response.status_code} — {e.response.text[:200]}")
-            if is_transient and tentativa < max_tentativas:
+            if e.response.status_code >= 500 and tentativa < max_tentativas:
                 espera = 30 * tentativa
-                log.info(f"⏳ Erro transitório — aguardando {espera}s e tentando novamente...")
+                log.info(f"⏳ Erro {e.response.status_code} (servidor) — aguardando {espera}s...")
                 time.sleep(espera)
             else:
                 raise
