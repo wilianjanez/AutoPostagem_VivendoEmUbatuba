@@ -60,6 +60,16 @@ FONT_EMOJI = os.getenv("FONT_EMOJI_PATH", os.path.join(_BASE, "fonts", "NotoColo
 
 INSTAGRAM_API_BASE = "https://graph.instagram.com/v21.0"
 
+HASHTAGS_OBRIGATORIAS = "#ubatuba #praiaubatuba #vivendoubatuba #ubatubahoje #ubatubasp #litoralnorte"
+
+def _garantir_hashtags(hashtags: str) -> str:
+    """Acrescenta as hashtags obrigatórias que ainda não estejam presentes."""
+    existentes = set(hashtags.lower().split())
+    adicionais = [h for h in HASHTAGS_OBRIGATORIAS.split() if h.lower() not in existentes]
+    if adicionais:
+        return hashtags.rstrip() + " " + " ".join(adicionais)
+    return hashtags
+
 # =============================================================================
 # LOG
 # =============================================================================
@@ -1530,6 +1540,7 @@ def executar_agente():
             hashtags_c  = clima["hashtags"]
             condicao_c  = clima.get("condicao", "VARIAVEL")
             temps_c     = clima.get("temperaturas") or ""
+            hashtags_c  = _garantir_hashtags(hashtags_c)
             legenda_c   = f"{titulo_c}\n\n{temps_c + chr(10) if temps_c else ''}{corpo_c}\n\n{cta_c}\n\n{hashtags_c}"
             log.info(f"📝 Clima: {titulo_c} [{condicao_c}]")
 
@@ -1601,11 +1612,12 @@ def executar_agente():
                 tema_log   = "RESUMO DA SEMANA"
 
                 # Monta legenda com lista numerada
-                lista_txt = "\n".join(
+                lista_txt  = "\n".join(
                     f"{i+1}. {it['emoji']} {it['texto']}"
                     for i, it in enumerate(itens)
                 )
-                legenda_r = f"📋 Resumo da Semana\n\n{corpo_r}\n\n{lista_txt}\n\n{cta_r}\n\n{hashtags_r}"
+                hashtags_r = _garantir_hashtags(hashtags_r)
+                legenda_r  = f"📋 Resumo da Semana\n\n{corpo_r}\n\n{lista_txt}\n\n{cta_r}\n\n{hashtags_r}"
                 log.info(f"📝 Resumo com {len(itens)} itens")
 
                 # Story resumo
@@ -1664,6 +1676,7 @@ def executar_agente():
                 hashtags_t  = tematico["hashtags"]
                 tema_log    = tematico.get("tema", "?")
                 motivo      = tematico.get("motivo_escolha", "")
+                hashtags_t  = _garantir_hashtags(hashtags_t)
                 legenda_t   = f"{titulo_t}\n\n{corpo_t}\n\n{cta_t}\n\n{hashtags_t}"
 
                 log.info(f"📝 Tema: {tema_log}")
