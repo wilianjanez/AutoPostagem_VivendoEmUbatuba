@@ -8,7 +8,7 @@ EXECUÇÃO:      python agente_ubatuba.py
 =============================================================================
 """
 
-import os, io, re, json, time, base64, logging, requests, random, ftplib
+import os, io, re, json, time, base64, logging, requests, random, ftplib, feedparser
 from datetime import datetime
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw, ImageFont
@@ -28,6 +28,8 @@ YOUTUBE_CLIENT_ID     = os.getenv("YOUTUBE_CLIENT_ID")
 YOUTUBE_CLIENT_SECRET = os.getenv("YOUTUBE_CLIENT_SECRET")
 YOUTUBE_REFRESH_TOKEN = os.getenv("YOUTUBE_REFRESH_TOKEN")
 OPENWEATHER_API_KEY   = os.getenv("OPENWEATHER_API_KEY")
+GOOGLE_SEARCH_API_KEY = os.getenv("GOOGLE_SEARCH_API_KEY")
+GOOGLE_SEARCH_CX      = os.getenv("GOOGLE_SEARCH_CX")
 
 # FTP — hospedagem temporária de vídeos para Instagram Stories
 FTP_HOST   = os.getenv("FTP_HOST",   "ftp.cojanez.cnt.br")
@@ -252,6 +254,12 @@ FONTES_LOCAIS = [
     "ubatuba.sp.gov.br",     # Prefeitura de Ubatuba
 ]
 
+# Feeds RSS das fontes locais — lidos diretamente, sem consumir API
+RSS_FONTES_LOCAIS = [
+    "https://ubatubatimes.com.br/feed/",
+    "https://www.ubatuba.sp.gov.br/feed/",
+]
+
 def _buscar_tavily(query: str, categoria: str, hoje,
                    include_domains: list = None, days: int = 3) -> list:
     """
@@ -310,6 +318,75 @@ def _buscar_tavily(query: str, categoria: str, hoje,
         return []
 
 
+_HTML_RE = re.compile(r'<[^>]+>')
+
+def _buscar_rss(feed_url: str, categoria: str, hoje, days: int = 7) -> list:
+    """Lê feed RSS diretamente (sem API key) e retorna itens dos últimos `days` dias."""
+    try:
+        feed  = feedparser.parse(feed_url)
+        itens = []
+        for entry in feed.entries[:20]:
+            pub = None
+            for attr in ("published_parsed", "updated_parsed"):
+                raw = getattr(entry, attr, None)
+                if raw:
+                    try:
+                        pub = datetime(*raw[:6])
+                        break
+                    except Exception:
+                        pass
+
+            if pub:
+                d = (hoje - pub).days
+                if d > days:
+                    continue
+                idade = "[HOJE]" if d == 0 else f"[{d}d atrás]"
+            else:
+                idade = "[data desconhecida]"
+
+            titulo = _HTML_RE.sub("", entry.get("title", "")).strip()
+            resumo = _HTML_RE.sub("", entry.get("summary", ""))[:400].strip()
+            itens.append(f"  • {idade} 📍LOCAL {titulo}\n    {resumo}")
+
+        return itens
+    except Exception as e:
+        log.warning(f"  ⚠️  Erro RSS '{categoria}' ({feed_url}): {e}")
+        return []
+
+
+def _buscar_google(query: str, categoria: str, hoje, days: int = 3) -> list:
+    """Busca via Google Custom Search API (100 req/dia grátis). Retorna lista de itens."""
+    if not GOOGLE_SEARCH_API_KEY or not GOOGLE_SEARCH_CX:
+        return []
+    try:
+        resp = requests.get(
+            "https://www.googleapis.com/customsearch/v1",
+            params={
+                "key":          GOOGLE_SEARCH_API_KEY,
+                "cx":           GOOGLE_SEARCH_CX,
+                "q":            query,
+                "num":          5,
+                "dateRestrict": f"d{max(1, days)}",
+                "lr":           "lang_pt",
+            },
+            timeout=15,
+        )
+        resp.raise_for_status()
+        itens = []
+        for item in resp.json().get("items", []):
+            titulo   = item.get("title", "").strip()
+            snippet  = item.get("snippet", "")[:400].strip()
+            url      = item.get("link", "")
+            is_local = any(d in url for d in FONTES_LOCAIS)
+            tag      = " 📍LOCAL" if is_local else ""
+            itens.append(f"  •{tag} {titulo}\n    {snippet}")
+        log.info(f"    ✅ Google '{categoria}': {len(itens)} resultado(s)")
+        return itens
+    except requests.exceptions.RequestException as e:
+        log.warning(f"  ⚠️  Erro Google Search '{categoria}': {e}")
+        return []
+
+
 def buscar_noticias_ubatuba() -> str:
     """
     Busca notícias recentes sobre Ubatuba em duas etapas complementares:
@@ -333,39 +410,43 @@ def buscar_noticias_ubatuba() -> str:
 
     blocos = []
 
-    # ── ETAPA 1: Fontes locais (complementares, não restritivas) ──────────────
-    log.info("  📍 Etapa 1 — buscando nas fontes locais...")
-    buscas_locais = [
-        ("📍 UBATUBA TIMES",  f"Ubatuba notícias {mes_ano}"),
-        ("📍 PREFEITURA",     f"Ubatuba prefeitura noticias eventos {mes_ano}"),
-    ]
-    for categoria, query in buscas_locais:
-        # Busca exclusiva nas fontes locais para garantir que apareçam
-        itens = _buscar_tavily(query, categoria, hoje,
-                               include_domains=FONTES_LOCAIS, days=7)
-        if itens:
-            blocos.append(f"=== {categoria} ===\n" + "\n".join(itens))
-            log.info(f"    ✅ {categoria}: {len(itens)} resultado(s)")
-        else:
-            log.info(f"    ⚠️  {categoria}: sem resultados")
-        time.sleep(1.2)
+    # ── ETAPA 1: Fontes locais via RSS (sem API) ───────────────────────────────
+    log.info("  📍 Etapa 1 — fontes locais via RSS...")
+    itens_locais = []
+    for feed_url in RSS_FONTES_LOCAIS:
+        itens_locais.extend(_buscar_rss(feed_url, "LOCAL", hoje, days=7))
 
-    # ── ETAPA 2: Busca geral — todas as fontes, sem restrição ─────────────────
-    log.info("  🌐 Etapa 2 — busca geral por categoria (todas as fontes)...")
+    if itens_locais:
+        blocos.append("=== 📍 FONTES LOCAIS ===\n" + "\n".join(itens_locais[:8]))
+        log.info(f"    ✅ RSS local: {len(itens_locais)} resultado(s)")
+    else:
+        log.info("  ⚠️  RSS sem resultados — tentando Tavily local...")
+        for categoria, query in [
+            ("📍 UBATUBA TIMES", f"Ubatuba notícias {mes_ano}"),
+            ("📍 PREFEITURA",    f"Ubatuba prefeitura noticias eventos {mes_ano}"),
+        ]:
+            itens = _buscar_tavily(query, categoria, hoje, include_domains=FONTES_LOCAIS, days=7)
+            if itens:
+                blocos.append(f"=== {categoria} ===\n" + "\n".join(itens))
+                log.info(f"    ✅ {categoria}: {len(itens)} resultado(s)")
+            time.sleep(1.2)
+
+    # ── ETAPA 2: Busca geral — Google → Tavily fallback ───────────────────────
+    log.info("  🌐 Etapa 2 — busca geral (Google → Tavily fallback)...")
     buscas_gerais = {
-        "🌤️ CLIMA & TEMPO":  f"Ubatuba previsão tempo temperatura chuva {data_ext}",
-        "🏖️ PRAIAS":         f"Ubatuba praias condições mar bandeira qualidade água {data_ext}",
-        "🎭 EVENTOS":         f"Ubatuba eventos shows festas feiras programação {mes_ano}",
-        "🍤 GASTRONOMIA":    f"Ubatuba restaurantes gastronomia frutos do mar novidades {mes_ano}",
-        "🌿 NATUREZA":       f"Ubatuba trilhas parques cachoeiras ecoturismo natureza {mes_ano}",
-        "🏄 SURF & MAR":     f"Ubatuba surf ondas vento maré previsão mar {data_ext}",
-        "🎨 CULTURA":        f"Ubatuba cultura arte artesanato tradição caiçara {mes_ano}",
-        "✈️ TURISMO":        f"Ubatuba turismo atrações roteiros pontos turísticos {mes_ano}",
+        "🌤️ CLIMA & TEMPO": f"Ubatuba previsão tempo temperatura chuva {data_ext}",
+        "🏖️ PRAIAS":        f"Ubatuba praias condições mar bandeira qualidade água {data_ext}",
+        "🎭 EVENTOS":        f"Ubatuba eventos shows festas feiras programação {mes_ano}",
+        "🍤 GASTRONOMIA":   f"Ubatuba restaurantes gastronomia frutos do mar novidades {mes_ano}",
+        "🌿 NATUREZA":      f"Ubatuba trilhas parques cachoeiras ecoturismo natureza {mes_ano}",
+        "🏄 SURF & MAR":    f"Ubatuba surf ondas vento maré previsão mar {data_ext}",
+        "🎨 CULTURA":       f"Ubatuba cultura arte artesanato tradição caiçara {mes_ano}",
+        "✈️ TURISMO":       f"Ubatuba turismo atrações roteiros pontos turísticos {mes_ano}",
     }
     for categoria, query in buscas_gerais.items():
-        # Sem include_domains — aceita qualquer fonte relevante
-        itens = _buscar_tavily(query, categoria, hoje,
-                               include_domains=None, days=3)
+        itens = _buscar_google(query, categoria, hoje, days=3)
+        if not itens:
+            itens = _buscar_tavily(query, categoria, hoje, include_domains=None, days=3)
         if itens:
             blocos.append(f"=== {categoria} ===\n" + "\n".join(itens))
             log.info(f"    ✅ {categoria}: {len(itens)} resultado(s)")
@@ -723,19 +804,31 @@ def buscar_noticias_semana() -> str:
     ]
 
     blocos = []
-    # Fontes locais — incluídas como referência, não como filtro
-    for categoria, query in buscas_locais_semana:
-        itens = _buscar_tavily(query, categoria, hoje,
-                               include_domains=FONTES_LOCAIS, days=7)
-        if itens:
-            blocos.append(f"=== {categoria} ===\n" + "\n".join(itens))
-            log.info(f"    ✅ {categoria}: {len(itens)} resultado(s)")
-        time.sleep(1.2)
 
-    # Busca geral — todas as fontes sem restrição
+    # Fontes locais via RSS (sem API), fallback Tavily
+    log.info("  📍 RSS fontes locais (semana)...")
+    itens_locais = []
+    for feed_url in RSS_FONTES_LOCAIS:
+        itens_locais.extend(_buscar_rss(feed_url, "LOCAL SEMANA", hoje, days=7))
+
+    if itens_locais:
+        blocos.append("=== 📍 LOCAL SEMANA ===\n" + "\n".join(itens_locais[:10]))
+        log.info(f"    ✅ RSS local semana: {len(itens_locais)} resultado(s)")
+    else:
+        log.info("  ⚠️  RSS sem resultados — tentando Tavily local...")
+        for categoria, query in buscas_locais_semana:
+            itens = _buscar_tavily(query, categoria, hoje, include_domains=FONTES_LOCAIS, days=7)
+            if itens:
+                blocos.append(f"=== {categoria} ===\n" + "\n".join(itens))
+                log.info(f"    ✅ {categoria}: {len(itens)} resultado(s)")
+            time.sleep(1.2)
+
+    # Busca geral — Google → Tavily fallback
+    log.info("  🌐 Busca geral semana (Google → Tavily fallback)...")
     for categoria, query in buscas_gerais_semana:
-        itens = _buscar_tavily(query, categoria, hoje,
-                               include_domains=None, days=7)
+        itens = _buscar_google(query, categoria, hoje, days=7)
+        if not itens:
+            itens = _buscar_tavily(query, categoria, hoje, include_domains=None, days=7)
         if itens:
             blocos.append(f"=== {categoria} ===\n" + "\n".join(itens))
             log.info(f"    ✅ {categoria}: {len(itens)} resultado(s)")
@@ -1154,7 +1247,7 @@ def gerar_video_short(imagem_bytes: bytes, duracao: int = 10) -> bytes:
             fps=24,
             codec="libx264",
             audio_codec="aac",
-            ffmpeg_params=["-pix_fmt", "yuv420p", "-profile:v", "baseline", "-level", "3.1"],
+            ffmpeg_params=["-pix_fmt", "yuv420p", "-profile:v", "high", "-level", "4.1"],
             verbose=False,
             logger=None,
             temp_audiofile=tmp_path + "_audio.m4a",

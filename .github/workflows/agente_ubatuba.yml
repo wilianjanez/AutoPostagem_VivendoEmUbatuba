@@ -17,7 +17,7 @@ jobs:
           python-version: "3.11"
       - name: 📦 Instalar dependências
         run: |
-          pip install requests python-dotenv Pillow numpy
+          pip install requests python-dotenv Pillow numpy feedparser
           pip install moviepy==1.0.3
           pip install google-auth-oauthlib google-api-python-client google-auth-httplib2
       - name: 🔐 Configurar variáveis de ambiente
@@ -44,6 +44,8 @@ jobs:
           echo "FUNDO_NUBLADO_URLS=${{ secrets.FUNDO_NUBLADO_URLS }}" >> .env
           echo "FUNDO_TEMPESTADE_URLS=${{ secrets.FUNDO_TEMPESTADE_URLS }}" >> .env
           echo "OPENWEATHER_API_KEY=${{ secrets.OPENWEATHER_API_KEY }}" >> .env
+          echo "GOOGLE_SEARCH_API_KEY=${{ secrets.GOOGLE_SEARCH_API_KEY }}" >> .env
+          echo "GOOGLE_SEARCH_CX=${{ secrets.GOOGLE_SEARCH_CX }}" >> .env
       - name: 🚀 Executar agente
         run: python agente_ubatuba.py
       - name: 📋 Salvar log de execução
