@@ -1114,6 +1114,7 @@ def _criar_container_video(video_url: str, is_story: bool = True) -> str:
     """
     Cria container de VÍDEO na API Graph do Instagram para Stories em vídeo.
     Aguarda o status FINISHED antes de retornar (evita erro 400 / subcode 2207027).
+    Tenta até 3 vezes em caso de erro transitório (is_transient=true).
     """
     log.info("📦 Criando container de vídeo (STORY)...")
     endpoint = f"{INSTAGRAM_API_BASE}/{IG_USER_ID}/media"
@@ -1122,23 +1123,37 @@ def _criar_container_video(video_url: str, is_story: bool = True) -> str:
         "media_type":   "STORIES",
         "access_token": IG_ACCESS_TOKEN,
     }
-    try:
-        resp = requests.post(endpoint, data=payload, timeout=30)
-        resp.raise_for_status()
-        cid = resp.json().get("id")
-        if not cid:
-            raise ValueError(f"Sem ID: {resp.json()}")
-        log.info(f"✅ Container vídeo criado: {cid} — aguardando processamento...")
+    max_tentativas = 3
+    for tentativa in range(1, max_tentativas + 1):
+        try:
+            resp = requests.post(endpoint, data=payload, timeout=30)
+            resp.raise_for_status()
+            cid = resp.json().get("id")
+            if not cid:
+                raise ValueError(f"Sem ID: {resp.json()}")
+            log.info(f"✅ Container vídeo criado: {cid} — aguardando processamento...")
 
-        # Aguarda FINISHED em vez de sleep fixo
-        pronto = _aguardar_processamento_video(cid)
-        if not pronto:
-            raise RuntimeError(f"Vídeo {cid} não ficou pronto para publicação.")
+            pronto = _aguardar_processamento_video(cid)
+            if not pronto:
+                raise RuntimeError(f"Vídeo {cid} não ficou pronto para publicação.")
 
-        return cid
-    except requests.exceptions.HTTPError as e:
-        log.error(f"❌ Erro container vídeo: {e.response.status_code} — {e.response.text}")
-        raise
+            return cid
+
+        except requests.exceptions.HTTPError as e:
+            dados = {}
+            try:
+                dados = e.response.json()
+            except Exception:
+                pass
+            is_transient = dados.get("is_transient", False)
+            log.error(f"❌ Erro container vídeo ({tentativa}/{max_tentativas}): "
+                      f"{e.response.status_code} — {e.response.text[:200]}")
+            if is_transient and tentativa < max_tentativas:
+                espera = 30 * tentativa
+                log.info(f"⏳ Erro transitório — aguardando {espera}s e tentando novamente...")
+                time.sleep(espera)
+            else:
+                raise
 
 
 def _criar_container(imagem_url, legenda="", is_story=False):
