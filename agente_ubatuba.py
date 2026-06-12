@@ -1073,8 +1073,8 @@ def fazer_upload_imgbb(imagem_bytes: bytes, nome: str) -> str:
 # =============================================================================
 
 def _aguardar_processamento_video(container_id: str,
-                                   tentativas: int = 15,
-                                   intervalo: int = 10) -> bool:
+                                   tentativas: int = 24,
+                                   intervalo: int = 15) -> bool:
     """
     Consulta o status do container de vídeo até ficar FINISHED.
     Tenta até `tentativas` vezes com `intervalo` segundos entre cada uma.
@@ -1257,7 +1257,7 @@ def gerar_video_short(imagem_bytes: bytes, duracao: int = 10) -> bytes:
             fps=24,
             codec="libx264",
             audio_codec="aac",
-            ffmpeg_params=["-pix_fmt", "yuv420p", "-profile:v", "high", "-level", "4.1"],
+            ffmpeg_params=["-pix_fmt", "yuv420p", "-profile:v", "baseline", "-level", "4.1"],
             verbose=False,
             logger=None,
             temp_audiofile=tmp_path + "_audio.m4a",
