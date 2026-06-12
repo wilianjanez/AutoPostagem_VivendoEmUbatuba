@@ -1156,17 +1156,25 @@ def _criar_container(imagem_url, legenda="", is_story=False):
     payload = {"image_url": imagem_url, "access_token": IG_ACCESS_TOKEN}
     if is_story: payload["media_type"] = "STORIES"
     else: payload["caption"] = legenda
-    try:
-        resp = requests.post(f"{INSTAGRAM_API_BASE}/{IG_USER_ID}/media",
-                             data=payload, timeout=30)
-        resp.raise_for_status()
-        cid = resp.json().get("id")
-        if not cid: raise ValueError(f"Sem ID: {resp.json()}")
-        log.info(f"✅ Container {tipo}: {cid}")
-        return cid
-    except requests.exceptions.HTTPError as e:
-        log.error(f"❌ Erro container {tipo}: {e.response.status_code} — {e.response.text}")
-        raise
+    max_tentativas = 3
+    for tentativa in range(1, max_tentativas + 1):
+        try:
+            resp = requests.post(f"{INSTAGRAM_API_BASE}/{IG_USER_ID}/media",
+                                 data=payload, timeout=30)
+            resp.raise_for_status()
+            cid = resp.json().get("id")
+            if not cid: raise ValueError(f"Sem ID: {resp.json()}")
+            log.info(f"✅ Container {tipo}: {cid}")
+            return cid
+        except requests.exceptions.HTTPError as e:
+            log.error(f"❌ Erro container {tipo} ({tentativa}/{max_tentativas}): "
+                      f"{e.response.status_code} — {e.response.text[:200]}")
+            if e.response.status_code >= 500 and tentativa < max_tentativas:
+                espera = 30 * tentativa
+                log.info(f"⏳ Erro {e.response.status_code} (servidor) — aguardando {espera}s...")
+                time.sleep(espera)
+            else:
+                raise
 
 def _publicar_container(container_id, tipo="POST"):
     log.info(f"🚀 Publicando {tipo}...")
