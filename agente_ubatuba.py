@@ -62,6 +62,13 @@ INSTAGRAM_API_BASE = "https://graph.instagram.com/v21.0"
 
 HASHTAGS_OBRIGATORIAS = "#ubatuba #praiaubatuba #vivendoubatuba #ubatubahoje #ubatubasp #litoralnorte"
 
+_HASHTAGS_YT = "#ubatuba #vivendoubatuba #praiaubatuba #ubatubahoje #ubatubasp"
+
+def _montar_titulo_yt(titulo: str) -> str:
+    """Adiciona hashtags ao título do YouTube garantindo no máximo 100 caracteres."""
+    sufixo = " " + _HASHTAGS_YT
+    return titulo[:100 - len(sufixo)] + sufixo
+
 def _garantir_hashtags(hashtags: str) -> str:
     """Acrescenta as hashtags obrigatórias que ainda não estejam presentes."""
     existentes = set(hashtags.lower().split())
@@ -217,13 +224,17 @@ def buscar_clima_apenas() -> str:
     # Só pula o Tavily se o OpenWeatherMap retornou dados de temperatura/condição.
     # Apenas dados de ondas (Open-Meteo) não são suficientes para o Claude gerar
     # conteúdo de clima com confiança.
+    DIAS_PT = ["Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado","Domingo"]
+    dia_nome = DIAS_PT[hoje.weekday()]
+
+    cabecalho = (
+        f"DATA DE HOJE: {data_br} ({dia_nome})\n"
+        f"Use APENAS informações de clima e tempo.\n"
+        f"{'='*60}\n"
+    )
+
     if bloco_clima:
-        blocos    = [b for b in [bloco_clima, bloco_mar] if b]
-        cabecalho = (
-            f"DATA DE HOJE: {data_br}\n"
-            f"Use APENAS informações de clima e tempo.\n"
-            f"{'='*60}\n"
-        )
+        blocos = [b for b in [bloco_clima, bloco_mar] if b]
         return cabecalho + "\n\n".join(blocos)
 
     # Fallback: Tavily (busca clima; Open-Meteo Marine é adicionado se disponível)
@@ -234,7 +245,7 @@ def buscar_clima_apenas() -> str:
 
     blocos = []
     if bloco_mar:
-        blocos.append(bloco_mar)   # inclui dados de ondas já obtidos
+        blocos.append(bloco_mar)
 
     for categoria, query in buscas_tavily:
         itens = _buscar_tavily(query, categoria, hoje, include_domains=FONTES_LOCAIS, days=1)
@@ -250,11 +261,6 @@ def buscar_clima_apenas() -> str:
     if not blocos:
         return ""
 
-    cabecalho = (
-        f"DATA DE HOJE: {data_br}\n"
-        f"Use APENAS informações de clima e tempo.\n"
-        f"{'='*60}\n"
-    )
     return cabecalho + "\n\n".join(blocos)
 
 
@@ -489,6 +495,7 @@ Você é o curador do perfil "Vivendo em Ubatuba" no Instagram.
 
 TAREFA: Gere conteúdo APENAS sobre clima e tempo em Ubatuba para hoje.
 DATA: Use APENAS informações compatíveis com a data de hoje. Se não houver: PULAR
+DIA DA SEMANA: O dia da semana está informado nos dados entre parênteses após a data — use-o exatamente se quiser mencionar o dia no título ou corpo. NUNCA infira o dia sozinho.
 FILTRAGEM: Nada de política, crimes ou tragédias. Se não houver dados de clima: PULAR
 FONTES LOCAIS: Prefira resultados marcados com 📍LOCAL.
 
@@ -1601,7 +1608,7 @@ def executar_agente():
                 video_bytes_c = gerar_video_short(bytes_sc_img, duracao=10)
             youtube_clima_id = publicar_youtube_short(
                 video_bytes_c,
-                titulo=f"UBATUBA - {titulo_c}",
+                titulo=_montar_titulo_yt(f"UBATUBA - {titulo_c}"),
                 descricao=descricao_yt,
                 tags=["ubatuba", "clima", "tempo", "litoral norte"]
             )
@@ -1674,7 +1681,7 @@ def executar_agente():
                 video_bytes_r = gerar_video_short(bytes_sr, duracao=10)
                 youtube_tematico_id = publicar_youtube_short(
                     video_bytes_r,
-                    titulo="UBATUBA - Resumo da Semana",
+                    titulo=_montar_titulo_yt("UBATUBA - Resumo da Semana"),
                     descricao=descricao_yt,
                     tags=["ubatuba", "resumo", "semana", "litoral norte"]
                 )
@@ -1749,7 +1756,7 @@ def executar_agente():
                     video_bytes_t = gerar_video_short(bytes_st, duracao=10)
                     youtube_tematico_id = publicar_youtube_short(
                         video_bytes_t,
-                        titulo=f"UBATUBA - {titulo_t}",
+                        titulo=_montar_titulo_yt(f"UBATUBA - {titulo_t}"),
                         descricao=descricao_yt,
                         tags=["ubatuba", tema_log.lower() if tema_log else "ubatuba"]
                     )
