@@ -28,8 +28,7 @@ YOUTUBE_CLIENT_ID     = os.getenv("YOUTUBE_CLIENT_ID")
 YOUTUBE_CLIENT_SECRET = os.getenv("YOUTUBE_CLIENT_SECRET")
 YOUTUBE_REFRESH_TOKEN = os.getenv("YOUTUBE_REFRESH_TOKEN")
 OPENWEATHER_API_KEY   = os.getenv("OPENWEATHER_API_KEY")
-GOOGLE_SEARCH_API_KEY = os.getenv("GOOGLE_SEARCH_API_KEY")
-GOOGLE_SEARCH_CX      = os.getenv("GOOGLE_SEARCH_CX")
+SEARCHAPI_KEY         = os.getenv("SEARCHAPI_KEY")
 
 # FTP — hospedagem temporária de vídeos para Instagram Stories
 FTP_HOST   = os.getenv("FTP_HOST",   "ftp.cojanez.cnt.br")
@@ -371,35 +370,36 @@ def _buscar_rss(feed_url: str, categoria: str, hoje, days: int = 7) -> list:
 
 
 def _buscar_google(query: str, categoria: str, hoje, days: int = 3) -> list:
-    """Busca via Google Custom Search API (100 req/dia grátis). Retorna lista de itens."""
-    if not GOOGLE_SEARCH_API_KEY or not GOOGLE_SEARCH_CX:
+    """Busca via SearchApi.io (substituto do Google Custom Search). Retorna lista de itens."""
+    if not SEARCHAPI_KEY:
         return []
     try:
         resp = requests.get(
-            "https://www.googleapis.com/customsearch/v1",
+            "https://www.searchapi.io/api/v1/search",
             params={
-                "key":          GOOGLE_SEARCH_API_KEY,
-                "cx":           GOOGLE_SEARCH_CX,
-                "q":            query,
-                "num":          5,
-                "dateRestrict": f"d{max(1, days)}",
-                "lr":           "lang_pt",
+                "engine":  "google",
+                "q":       query,
+                "num":     5,
+                "tbs":     f"qdr:d{max(1, days)}",
+                "hl":      "pt",
+                "gl":      "br",
+                "api_key": SEARCHAPI_KEY,
             },
             timeout=15,
         )
         resp.raise_for_status()
         itens = []
-        for item in resp.json().get("items", []):
+        for item in resp.json().get("organic_results", []):
             titulo   = item.get("title", "").strip()
             snippet  = item.get("snippet", "")[:400].strip()
             url      = item.get("link", "")
             is_local = any(d in url for d in FONTES_LOCAIS)
             tag      = " 📍LOCAL" if is_local else ""
             itens.append(f"  •{tag} {titulo}\n    {snippet}")
-        log.info(f"    ✅ Google '{categoria}': {len(itens)} resultado(s)")
+        log.info(f"    ✅ SearchApi '{categoria}': {len(itens)} resultado(s)")
         return itens
     except requests.exceptions.RequestException as e:
-        log.warning(f"  ⚠️  Erro Google Search '{categoria}': {e}")
+        log.warning(f"  ⚠️  Erro SearchApi '{categoria}': {e}")
         return []
 
 
